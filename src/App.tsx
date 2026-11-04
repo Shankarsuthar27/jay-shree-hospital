@@ -86,7 +86,9 @@ function Header() {
         <div className="shell utility-inner">
           <div className="utility-group">
             <a href={MAP_URL} target="_blank" rel="noreferrer">
-              <MapPin size={14} /> Shivaji Nagar Colony, Jalore
+              <MapPin size={14} /> Manpura Colony, Shivaji Nagar Colony, Jalore
+
+
             </a>
             <span><Clock3 size={14} /> Open 24 Hours</span>
           </div>
@@ -200,17 +202,28 @@ function Hero() {
 
   return (
     <section className="hero">
-      <AnimatePresence mode="popLayout">
-        <motion.img
-          key={current.image}
-          src={current.image}
-          alt={current.badge}
-          initial={{ opacity: 0, scale: 1.04 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1.1 }}
-        />
-      </AnimatePresence>
+      {/* Mobile hero image: dedicated vertical building facade view */}
+      <img
+        src="/images/hero-mobile.jpg"
+        alt="JayShree Hospital building facade"
+        className="hero-mobile-bg"
+      />
+
+      {/* Desktop hero slideshow */}
+      <div className="hero-desktop-slides">
+        <AnimatePresence mode="popLayout">
+          <motion.img
+            key={current.image}
+            src={current.image}
+            alt={current.badge}
+            className="hero-desktop-img"
+            initial={{ opacity: 0, scale: 1.04 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.1 }}
+          />
+        </AnimatePresence>
+      </div>
       <div className="hero-overlay" />
       <div className="shell hero-inner">
         <motion.div
@@ -652,6 +665,7 @@ function PageHero({ title, crumb, image }: { title: string; crumb: string; image
 
 const galleryImages = [
   ['/images/main1.jpg', 'JayShree Hospital modern exterior facade', 'Exterior'],
+  ['/images/hero-mobile.jpg', 'JayShree Hospital full building architecture & signage', 'Exterior'],
   ['/images/entrance.jpg', 'Hospital main entrance & 24/7 medical store', 'Exterior'],
   ['/images/main2.jpg', 'Hospital entrance and patient access', 'Exterior'],
   ['/images/ambulance.jpg', '24/7 JayShree Hospital Emergency Ambulance Unit', 'Exterior'],
