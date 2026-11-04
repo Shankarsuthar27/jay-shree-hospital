@@ -199,6 +199,7 @@ const heroSlides = [
       </>
     ),
     text: 'Air-conditioned consultation chambers and comfortable patient waiting area for hassle-free consultations with Dr. Hemant Jain and specialist consultants.',
+    hideTextMobile: true,
     primaryBtn: { text: 'Book OPD Visit', href: '#appointment', isEmergency: false },
   },
   {
@@ -271,7 +272,7 @@ function Hero() {
         >
           <div className="hero-badge"><span /> {current.badge}</div>
           <h1>{current.title}</h1>
-          <p>{current.text}</p>
+          <p className={current.hideTextMobile ? 'hero-text-desktop-only' : ''}>{current.text}</p>
           <div className="hero-buttons">
             <a
               href={current.primaryBtn.href}
