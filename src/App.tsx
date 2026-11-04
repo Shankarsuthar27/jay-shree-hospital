@@ -199,7 +199,6 @@ const heroSlides = [
       </>
     ),
     text: 'Air-conditioned consultation chambers and comfortable patient waiting area for hassle-free consultations with Dr. Hemant Jain and specialist consultants.',
-    hideTextMobile: true,
     primaryBtn: { text: 'Book OPD Visit', href: '#appointment', isEmergency: false },
   },
   {
@@ -215,16 +214,16 @@ const heroSlides = [
     primaryBtn: { text: 'Discover Hospital Facilities', href: '#about', isEmergency: false },
   },
   {
-    image: '/images/ambulance.jpg',
-    badge: '24/7 Emergency & Rapid Response',
+    image: '/images/modular-ot.jpg',
+    badge: 'Korean Modular Operation Theater',
     title: (
       <>
-        Always on standby.<br />
-        <em>24/7 Emergency ambulance.</em>
+        Advanced surgical care.<br />
+        <em>Korean Modular O.T.</em>
       </>
     ),
-    text: 'Equipped life-support emergency ambulance with oxygen and trauma readiness on call round-the-clock for Jalore and nearby communities.',
-    primaryBtn: { text: 'Call Emergency Ambulance', href: PHONE, isEmergency: true },
+    text: 'Ultra-clean sterile surgical suite equipped with advanced C-Arm fluoroscopy, laminar airflow, and precision anesthesia workstation for major and minor surgeries.',
+    primaryBtn: { text: 'Explore Surgical Facilities', href: '#specialties', isEmergency: false },
   },
 ]
 
@@ -272,7 +271,7 @@ function Hero() {
         >
           <div className="hero-badge"><span /> {current.badge}</div>
           <h1>{current.title}</h1>
-          <p className={current.hideTextMobile ? 'hero-text-desktop-only' : ''}>{current.text}</p>
+          <p>{current.text}</p>
           <div className="hero-buttons">
             <a
               href={current.primaryBtn.href}
@@ -703,6 +702,8 @@ function PageHero({ title, crumb, image }: { title: string; crumb: string; image
 const galleryImages = [
   ['/images/main1.jpg', 'JayShree Hospital modern exterior facade', 'Exterior'],
   ['/images/hero-mobile.jpg', 'JayShree Hospital full building architecture & signage', 'Exterior'],
+  ['/images/modular-ot.jpg', 'Korean Modular Operation Theater with advanced C-Arm machine', 'Facilities'],
+  ['/images/operation-theater.jpg', 'Modern surgical suite with laminar airflow & anesthesia station', 'Facilities'],
   ['/images/icu.jpg', 'State-of-the-art Intensive Care Unit (ICU) & multi-para monitors', 'Facilities'],
   ['/images/specialties-lounge.jpg', 'Illuminated specialties wall & comfortable patient waiting lounge', 'Facilities'],
   ['/images/reception-lobby.jpg', 'Spacious hospital reception lobby & elevator access', 'Reception'],
