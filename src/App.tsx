@@ -148,6 +148,18 @@ const heroSlides = [
     primaryBtn: { text: 'Book An Appointment', href: '#appointment', isEmergency: false },
   },
   {
+    image: '/images/entrance.jpg',
+    badge: 'Hospital Entrance & On-Site Medical Store',
+    title: (
+      <>
+        Modern campus.<br />
+        <em>Always open for your family.</em>
+      </>
+    ),
+    text: 'Welcoming hospital entrance, on-site 24/7 pharmacy (Om Shanti Gurudev Medical Store), and immediate outpatient care in Shivaji Nagar Colony, Jalore.',
+    primaryBtn: { text: 'Discover Hospital Facilities', href: '#about', isEmergency: false },
+  },
+  {
     image: '/images/main2.jpg',
     badge: 'Modern Multispeciality Infrastructure',
     title: (
@@ -589,6 +601,7 @@ function PageHero({ title, crumb, image }: { title: string; crumb: string; image
 
 const galleryImages = [
   ['/images/main1.jpg', 'JayShree Hospital modern exterior facade', 'Exterior'],
+  ['/images/entrance.jpg', 'Hospital main entrance & 24/7 medical store', 'Exterior'],
   ['/images/main2.jpg', 'Hospital entrance and patient access', 'Exterior'],
   ['/images/ambulance.jpg', '24/7 JayShree Hospital Emergency Ambulance Unit', 'Exterior'],
   ['/images/DSCF0537.jpg', 'Contemporary hospital architecture', 'Exterior'],
