@@ -32,6 +32,7 @@ import {
   ShieldCheck,
   Stethoscope,
   Syringe,
+  User,
   Users,
   Waves,
   X,
@@ -541,72 +542,72 @@ const otherDoctors: OtherDoctor[] = [
   {
     id: 'dr-gupta',
     nameEn: 'DR. RAJENDRA KUMAR GUPTA',
-    nameHi: 'डॉ. राजेन्द्र कुमार गुप्ता',
+    nameHi: '',
     degreeHi: 'एम.एस. कन्सल्टींग सर्जन',
     degreeEn: 'M.S. Consulting Surgeon',
     department: 'General & Laparoscopic Surgery',
     departmentHi: 'जनरल एवं लेप्रोस्कोपिक सर्जरी',
-    image: '/images/doctors/dr-gupta.jpg',
+    image: '',
     timing: 'Visiting Consultant · Scheduled OPD & Emergency Surgery',
     bio: 'Senior Consulting Surgeon with comprehensive expertise in advanced laparoscopic procedures, abdominal and gastrointestinal surgeries, trauma management, and emergency surgical care for Jalore.',
   },
   {
     id: 'dr-sharma',
     nameEn: 'DR. SATYA PRAKASH SHARMA',
-    nameHi: 'डॉ. सत्य प्रकाश शर्मा',
+    nameHi: '',
     degreeHi: 'M.D. (पैथोलोजी)',
     degreeEn: 'M.D. (Pathology)',
     department: 'Clinical Pathology & Laboratory Medicine',
     departmentHi: 'पैथोलोजी एवं क्लिनिकल लैब',
-    image: '/images/doctors/dr-sharma.jpg',
+    image: '',
     timing: 'Senior Pathologist · Daily Laboratory Diagnostics',
     bio: 'Leading Consultant Pathologist directing diagnostic clinical pathology, histopathology, cytology, automated hematology, and biochemical assays to ensure rapid and accurate laboratory results.',
   },
   {
     id: 'dr-bajaj',
     nameEn: 'DR. RAJENDRA KUMAR BAJAJ',
-    nameHi: 'डॉ. राजेन्द्र कुमार बजाज',
+    nameHi: '',
     degreeHi: 'MBBS, M.D. बच्चों के डॉक्टर (गोल्ड मेडलिस्ट)',
     degreeEn: "MBBS, M.D. Children's Doctor (Gold Medalist)",
     department: 'Pediatrics & Neonatology',
     departmentHi: 'शिशु एवं बाल रोग विभाग',
-    image: '/images/doctors/dr-bajaj.jpg',
+    image: '',
     timing: 'Gold Medalist Pediatrician · Child & Newborn OPD',
     bio: 'Renowned Gold Medalist Pediatrician providing specialized care for infants, children, and adolescents, including immunization, developmental health monitoring, pediatric infections, and neonatal care.',
   },
   {
     id: 'dr-sarika',
     nameEn: 'DR. SARIKA CHOPRA',
-    nameHi: 'डॉ. सारिका चौपड़ा',
+    nameHi: '',
     degreeHi: 'स्त्री एवं प्रसुति रोग व निःसंतान रोग विशेषज्ञ',
     degreeEn: 'Obstetrics, Gynecology & Infertility Specialist',
     department: 'Obstetrics & Gynecology',
     departmentHi: 'स्त्री एवं प्रसूति रोग विभाग',
-    image: '/images/doctors/dr-sarika.jpg',
+    image: '',
     timing: 'Women & Maternity Specialist · Dedicated OPD',
     bio: "Experienced Obstetrician, Gynecologist, and Infertility Specialist dedicated to comprehensive women's health, high-risk pregnancy care, painless deliveries, reproductive wellness, and fertility guidance.",
   },
   {
     id: 'dr-vikas',
     nameEn: 'DR. VIKAS KUMAR',
-    nameHi: 'डॉ. विकास कुमार',
+    nameHi: '',
     degreeHi: 'हड्डी रोग एवं जोड़ प्रत्यारोपण विशेषज्ञ',
     degreeEn: 'Orthopedic & Joint Replacement Specialist',
     department: 'Orthopedics & Joint Replacement',
     departmentHi: 'हड्डी एवं जोड़ प्रत्यारोपण विभाग',
-    image: '/images/doctors/dr-vikas.jpg',
+    image: '',
     timing: 'Orthopedic Surgeon · Trauma & Joint Clinic',
     bio: 'Senior Orthopedic Surgeon specializing in total knee and hip replacement (arthroplasty), complex trauma fracture care, arthroscopic ligament reconstruction, arthritis treatment, and spine therapy.',
   },
   {
     id: 'dr-satish',
     nameEn: 'DR. SATISH SHAH',
-    nameHi: 'डॉ. सतीश शाह',
+    nameHi: '',
     degreeHi: 'D.M.R.E. (रेडियोलोजिस्ट)',
     degreeEn: 'D.M.R.E. (Radiologist)',
     department: 'Radiology & Medical Imaging',
     departmentHi: 'रेडियोलोजी एवं सोनोग्राफी विभाग',
-    image: '/images/doctors/dr-satish.jpg',
+    image: '',
     timing: 'Senior Radiologist · Ultrasonography & Imaging',
     bio: 'Consultant Radiologist with extensive experience in 4D colour Doppler sonography, CT-Angiography review, bedside digital X-ray evaluation, and precision radiological diagnoses for complex cases.',
   },
@@ -727,11 +728,17 @@ function OtherDoctors() {
                   <div className="doc-card-body">
                     <div className="doc-photo-col">
                       <div className="doc-photo-frame">
-                        <img
-                          src={doc.image}
-                          alt={`${doc.nameEn} - ${doc.degreeEn}`}
-                          loading="lazy"
-                        />
+                        {doc.image ? (
+                          <img
+                            src={doc.image}
+                            alt={`${doc.nameEn} - ${doc.degreeEn}`}
+                            loading="lazy"
+                          />
+                        ) : (
+                          <div className="doc-photo-blank">
+                            <User size={46} strokeWidth={1.4} className="doc-blank-icon" />
+                          </div>
+                        )}
                       </div>
                       <button
                         type="button"
@@ -819,10 +826,16 @@ function OtherDoctors() {
               <div className="doc-modal-body">
                 <div className="doc-modal-profile-grid">
                   <div className="doc-modal-photo">
-                    <img
-                      src={selectedDoctor.image}
-                      alt={selectedDoctor.nameEn}
-                    />
+                    {selectedDoctor.image ? (
+                      <img
+                        src={selectedDoctor.image}
+                        alt={selectedDoctor.nameEn}
+                      />
+                    ) : (
+                      <div className="doc-photo-blank doc-modal-blank">
+                        <User size={54} strokeWidth={1.4} className="doc-blank-icon" />
+                      </div>
+                    )}
                   </div>
                   <div className="doc-modal-details">
                     <div className="doc-modal-item">
@@ -1041,8 +1054,8 @@ function Footer() {
     <footer>
       <div className="shell footer-grid">
         <div><Logo light /><p>Ethical, accessible and compassionate healthcare for Jalore and surrounding communities.</p><div className="socials"><a href="#" aria-label="Website"><Globe /></a><a href="#" aria-label="Photo gallery"><Camera /></a><a href="#" aria-label="WhatsApp"><MessageCircle /></a></div></div>
-        <div><h4>Quick links</h4>{[['Home','/'],['About Us','/#about'],['Our Doctor','/#doctor'],['Specialists','/#doctors-panel'],['Photo Gallery','/gallery'],['Contact Us','/contact'],['Book Appointment','/#appointment']].map(([x,h])=><a key={x} href={h}>{x}</a>)}</div>
-        <div><h4>Our specialties</h4>{['Critical Medicine (ICU/CCU)','Cardiology','Neurology','Urology','Orthopedics','Surgery','Dialysis','Investigations'].map(x=><a key={x} href="/#specialties">{x}</a>)}</div>
+        <div><h4>Quick links</h4>{[['Home', '/'], ['About Us', '/#about'], ['Our Doctor', '/#doctor'], ['Specialists', '/#doctors-panel'], ['Photo Gallery', '/gallery'], ['Contact Us', '/contact'], ['Book Appointment', '/#appointment']].map(([x, h]) => <a key={x} href={h}>{x}</a>)}</div>
+        <div><h4>Our specialties</h4>{['Critical Medicine (ICU/CCU)', 'Cardiology', 'Neurology', 'Urology', 'Orthopedics', 'Surgery', 'Dialysis', 'Investigations'].map(x => <a key={x} href="/#specialties">{x}</a>)}</div>
         <div><h4>Contact & location</h4><p className="footer-contact"><MapPin />Manpura Colony, Shivaji Nagar Colony, Jalore, Rajasthan 343001</p><p className="footer-contact"><Mail />info@jayshreehospital.in</p><a className="map-link" href={MAP_URL} target="_blank" rel="noreferrer">View on Google Maps <ArrowUpRight size={16} /></a></div>
       </div>
       <div className="footer-bottom"><div className="shell"><span>© 2025 JayShree Hospital Jalore. All Rights Reserved.</span><span>Coordinates: 25.3470334, 72.6258287</span></div></div>
@@ -1083,10 +1096,10 @@ function GalleryPage() {
     <><Header /><main><PageHero image="/images/main1.jpg" crumb="Gallery" title="Inside JayShree Hospital — Infrastructure & Moments" />
       <section className="section gallery-section"><div className="shell">
         <SectionTitle eyebrow="Photo Gallery" title="Spaces created for care." text="Explore our modern hospital, welcoming patient areas, and the people behind JayShree Hospital." center />
-        <div className="filters">{[['All','All Photos'],['Exterior','Hospital Building & Exterior'],['Facilities','ICU & Clinical Facilities'],['Reception','Reception & Lobby'],['Leadership','Leadership']].map(([v,l])=><button className={filter===v?'active':''} onClick={()=>setFilter(v)} key={v}>{l}</button>)}</div>
-        <motion.div layout className="gallery-grid">{visible.map((img,i)=><motion.button layout key={img[0]} onClick={()=>setActive(i)} className={i===0?'wide':''}><img src={img[0]} alt={img[1]} /><span><small>{img[2]}</small><b>{img[1]}</b></span><i><ArrowUpRight /></i></motion.button>)}</motion.div>
+        <div className="filters">{[['All', 'All Photos'], ['Exterior', 'Hospital Building & Exterior'], ['Facilities', 'ICU & Clinical Facilities'], ['Reception', 'Reception & Lobby'], ['Leadership', 'Leadership']].map(([v, l]) => <button className={filter === v ? 'active' : ''} onClick={() => setFilter(v)} key={v}>{l}</button>)}</div>
+        <motion.div layout className="gallery-grid">{visible.map((img, i) => <motion.button layout key={img[0]} onClick={() => setActive(i)} className={i === 0 ? 'wide' : ''}><img src={img[0]} alt={img[1]} /><span><small>{img[2]}</small><b>{img[1]}</b></span><i><ArrowUpRight /></i></motion.button>)}</motion.div>
       </div></section>
-      <AnimatePresence>{active!==null&&<motion.div className="lightbox" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} onClick={()=>setActive(null)}><button className="lightbox-close" onClick={()=>setActive(null)}><X /></button><button className="lightbox-prev" onClick={(e)=>{e.stopPropagation();move(-1)}}><ArrowLeft /></button><motion.figure key={visible[active][0]} initial={{opacity:0,scale:.96}} animate={{opacity:1,scale:1}} onClick={e=>e.stopPropagation()}><img src={visible[active][0]} alt={visible[active][1]} /><figcaption>{visible[active][1]}<small>{active+1} / {visible.length}</small></figcaption></motion.figure><button className="lightbox-next" onClick={(e)=>{e.stopPropagation();move(1)}}><ArrowRight /></button></motion.div>}</AnimatePresence>
+      <AnimatePresence>{active !== null && <motion.div className="lightbox" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setActive(null)}><button className="lightbox-close" onClick={() => setActive(null)}><X /></button><button className="lightbox-prev" onClick={(e) => { e.stopPropagation(); move(-1) }}><ArrowLeft /></button><motion.figure key={visible[active][0]} initial={{ opacity: 0, scale: .96 }} animate={{ opacity: 1, scale: 1 }} onClick={e => e.stopPropagation()}><img src={visible[active][0]} alt={visible[active][1]} /><figcaption>{visible[active][1]}<small>{active + 1} / {visible.length}</small></figcaption></motion.figure><button className="lightbox-next" onClick={(e) => { e.stopPropagation(); move(1) }}><ArrowRight /></button></motion.div>}</AnimatePresence>
     </main><Footer /></>
   )
 }
@@ -1100,7 +1113,7 @@ function ContactPage() {
   return (
     <><Header /><main><PageHero image="/images/main2.jpg" crumb="Contact Us" title="Get In Touch With JayShree Hospital" />
       <section className="section contact-section"><div className="shell">
-        <div className="contact-cards">{cards.map(([Icon,title,line1,line2])=><article key={title as string}><span><Icon /></span><div><h3>{title as string}</h3><p>{line1 as string}</p>{line2&&<small>{line2 as string}</small>}</div></article>)}</div>
+        <div className="contact-cards">{cards.map(([Icon, title, line1, line2]) => <article key={title as string}><span><Icon /></span><div><h3>{title as string}</h3><p>{line1 as string}</p>{line2 && <small>{line2 as string}</small>}</div></article>)}</div>
         <div className="contact-split">
           <div className="contact-form-wrap"><SectionTitle eyebrow="Send An Inquiry" title="How can we help?" text="Share your details and our patient care team will get in touch." /><Appointment contact /></div>
           <div className="map-wrap"><iframe title="JayShree Hospital map" src="https://www.google.com/maps?q=25.3470334,72.6258287&z=16&output=embed" loading="lazy" /><div><span><MapPin /></span><p><b>JayShree Hospital, Jalore</b>Manpura Colony, Shivaji Nagar Colony</p><a href={MAP_URL} target="_blank" rel="noreferrer" className="button">Open in Google Maps <ArrowUpRight size={17} /></a></div></div>
