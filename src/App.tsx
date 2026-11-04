@@ -12,6 +12,7 @@ import {
   CalendarDays,
   Camera,
   Check,
+  ChevronLeft,
   ChevronRight,
   Clock3,
   Droplets,
@@ -523,6 +524,361 @@ function Doctor() {
   )
 }
 
+interface OtherDoctor {
+  id: string
+  nameEn: string
+  nameHi: string
+  degreeHi: string
+  degreeEn: string
+  department: string
+  departmentHi: string
+  image: string
+  timing: string
+  bio: string
+}
+
+const otherDoctors: OtherDoctor[] = [
+  {
+    id: 'dr-gupta',
+    nameEn: 'DR. RAJENDRA KUMAR GUPTA',
+    nameHi: 'डॉ. राजेन्द्र कुमार गुप्ता',
+    degreeHi: 'एम.एस. कन्सल्टींग सर्जन',
+    degreeEn: 'M.S. Consulting Surgeon',
+    department: 'General & Laparoscopic Surgery',
+    departmentHi: 'जनरल एवं लेप्रोस्कोपिक सर्जरी',
+    image: '/images/doctors/dr-gupta.jpg',
+    timing: 'Visiting Consultant · Scheduled OPD & Emergency Surgery',
+    bio: 'Senior Consulting Surgeon with comprehensive expertise in advanced laparoscopic procedures, abdominal and gastrointestinal surgeries, trauma management, and emergency surgical care for Jalore.',
+  },
+  {
+    id: 'dr-sharma',
+    nameEn: 'DR. SATYA PRAKASH SHARMA',
+    nameHi: 'डॉ. सत्य प्रकाश शर्मा',
+    degreeHi: 'M.D. (पैथोलोजी)',
+    degreeEn: 'M.D. (Pathology)',
+    department: 'Clinical Pathology & Laboratory Medicine',
+    departmentHi: 'पैथोलोजी एवं क्लिनिकल लैब',
+    image: '/images/doctors/dr-sharma.jpg',
+    timing: 'Senior Pathologist · Daily Laboratory Diagnostics',
+    bio: 'Leading Consultant Pathologist directing diagnostic clinical pathology, histopathology, cytology, automated hematology, and biochemical assays to ensure rapid and accurate laboratory results.',
+  },
+  {
+    id: 'dr-bajaj',
+    nameEn: 'DR. RAJENDRA KUMAR BAJAJ',
+    nameHi: 'डॉ. राजेन्द्र कुमार बजाज',
+    degreeHi: 'MBBS, M.D. बच्चों के डॉक्टर (गोल्ड मेडलिस्ट)',
+    degreeEn: "MBBS, M.D. Children's Doctor (Gold Medalist)",
+    department: 'Pediatrics & Neonatology',
+    departmentHi: 'शिशु एवं बाल रोग विभाग',
+    image: '/images/doctors/dr-bajaj.jpg',
+    timing: 'Gold Medalist Pediatrician · Child & Newborn OPD',
+    bio: 'Renowned Gold Medalist Pediatrician providing specialized care for infants, children, and adolescents, including immunization, developmental health monitoring, pediatric infections, and neonatal care.',
+  },
+  {
+    id: 'dr-sarika',
+    nameEn: 'DR. SARIKA CHOPRA',
+    nameHi: 'डॉ. सारिका चौपड़ा',
+    degreeHi: 'स्त्री एवं प्रसुति रोग व निःसंतान रोग विशेषज्ञ',
+    degreeEn: 'Obstetrics, Gynecology & Infertility Specialist',
+    department: 'Obstetrics & Gynecology',
+    departmentHi: 'स्त्री एवं प्रसूति रोग विभाग',
+    image: '/images/doctors/dr-sarika.jpg',
+    timing: 'Women & Maternity Specialist · Dedicated OPD',
+    bio: "Experienced Obstetrician, Gynecologist, and Infertility Specialist dedicated to comprehensive women's health, high-risk pregnancy care, painless deliveries, reproductive wellness, and fertility guidance.",
+  },
+  {
+    id: 'dr-vikas',
+    nameEn: 'DR. VIKAS KUMAR',
+    nameHi: 'डॉ. विकास कुमार',
+    degreeHi: 'हड्डी रोग एवं जोड़ प्रत्यारोपण विशेषज्ञ',
+    degreeEn: 'Orthopedic & Joint Replacement Specialist',
+    department: 'Orthopedics & Joint Replacement',
+    departmentHi: 'हड्डी एवं जोड़ प्रत्यारोपण विभाग',
+    image: '/images/doctors/dr-vikas.jpg',
+    timing: 'Orthopedic Surgeon · Trauma & Joint Clinic',
+    bio: 'Senior Orthopedic Surgeon specializing in total knee and hip replacement (arthroplasty), complex trauma fracture care, arthroscopic ligament reconstruction, arthritis treatment, and spine therapy.',
+  },
+  {
+    id: 'dr-satish',
+    nameEn: 'DR. SATISH SHAH',
+    nameHi: 'डॉ. सतीश शाह',
+    degreeHi: 'D.M.R.E. (रेडियोलोजिस्ट)',
+    degreeEn: 'D.M.R.E. (Radiologist)',
+    department: 'Radiology & Medical Imaging',
+    departmentHi: 'रेडियोलोजी एवं सोनोग्राफी विभाग',
+    image: '/images/doctors/dr-satish.jpg',
+    timing: 'Senior Radiologist · Ultrasonography & Imaging',
+    bio: 'Consultant Radiologist with extensive experience in 4D colour Doppler sonography, CT-Angiography review, bedside digital X-ray evaluation, and precision radiological diagnoses for complex cases.',
+  },
+]
+
+function OtherDoctors() {
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
+  const [selectedDoctor, setSelectedDoctor] = useState<OtherDoctor | null>(null)
+  const [touchStartX, setTouchStartX] = useState<number | null>(null)
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 800)
+    }
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSelectedDoctor(null)
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
+
+  useEffect(() => {
+    if (selectedDoctor) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [selectedDoctor])
+
+  const maxIndex = isMobile ? otherDoctors.length - 1 : otherDoctors.length - 2
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : maxIndex))
+  }
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev < maxIndex ? prev + 1 : 0))
+  }
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.touches[0].clientX)
+  }
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX === null) return
+    const touchEndX = e.changedTouches[0].clientX
+    const diff = touchStartX - touchEndX
+    if (diff > 45) {
+      handleNext()
+    } else if (diff < -45) {
+      handlePrev()
+    }
+    setTouchStartX(null)
+  }
+
+  return (
+    <section className="other-doctors-section" id="doctors-panel">
+      <div className="shell">
+        <div className="doc-section-header">
+          <div className="doc-eyebrow">
+            <Activity size={18} className="doc-pulse-icon" />
+            <span>MEDICAL EXPERTS</span>
+          </div>
+          <h2 className="doc-section-title">
+            Our Doctors
+          </h2>
+        </div>
+
+        <div className="doc-carousel-wrap">
+          {/* Navigation Arrows */}
+          <button
+            type="button"
+            className="doc-nav-btn doc-nav-prev"
+            onClick={handlePrev}
+            aria-label="Previous Doctor"
+          >
+            <ChevronLeft size={22} />
+          </button>
+
+          <button
+            type="button"
+            className="doc-nav-btn doc-nav-next"
+            onClick={handleNext}
+            aria-label="Next Doctor"
+          >
+            <ChevronRight size={22} />
+          </button>
+
+          {/* Carousel Viewport */}
+          <div
+            className="doc-cards-viewport"
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
+            <div
+              className="doc-cards-track"
+              style={{
+                transform: isMobile
+                  ? `translateX(calc(-${currentIndex} * (88% + 16px)))`
+                  : `translateX(calc(-${currentIndex} * (50% + 12px)))`,
+              }}
+            >
+              {otherDoctors.map((doc) => (
+                <article key={doc.id} className="doc-card">
+                  {/* Top Navy Header Bar */}
+                  <div className="doc-card-header">
+                    <h3 className="doc-card-name">{doc.nameEn}</h3>
+                    <span className="doc-card-subname">{doc.nameHi}</span>
+                  </div>
+
+                  {/* Card Body */}
+                  <div className="doc-card-body">
+                    <div className="doc-photo-col">
+                      <div className="doc-photo-frame">
+                        <img
+                          src={doc.image}
+                          alt={`${doc.nameEn} - ${doc.degreeEn}`}
+                          loading="lazy"
+                        />
+                      </div>
+                      <button
+                        type="button"
+                        className="doc-view-profile-btn"
+                        onClick={() => setSelectedDoctor(doc)}
+                      >
+                        View Profile
+                      </button>
+                    </div>
+
+                    <div className="doc-info-col">
+                      <div className="doc-degree-block">
+                        <span className="doc-degree-label">Degree:</span>
+                        <p className="doc-degree-value">{doc.degreeHi}</p>
+                        <p className="doc-degree-sub">{doc.degreeEn}</p>
+                      </div>
+
+                      <div className="doc-dept-badge">
+                        <span>{doc.department}</span>
+                      </div>
+
+                      <div className="doc-status-indicator">
+                        <span className="doc-live-dot" />
+                        <span>{doc.timing}</span>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          {/* Dots Indicator */}
+          <div className="doc-carousel-dots">
+            {otherDoctors.map((_, idx) => (
+              <button
+                key={idx}
+                type="button"
+                className={`doc-dot ${idx === currentIndex ? 'active' : ''}`}
+                onClick={() => setCurrentIndex(idx)}
+                aria-label={`Go to slide ${idx + 1}`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Doctor Profile Modal */}
+      <AnimatePresence>
+        {selectedDoctor && (
+          <motion.div
+            className="doc-modal-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedDoctor(null)}
+          >
+            <motion.div
+              className="doc-modal-card"
+              initial={{ opacity: 0, scale: 0.94, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.94, y: 20 }}
+              transition={{ duration: 0.25 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="doc-modal-header">
+                <div>
+                  <span className="doc-modal-eyebrow">{selectedDoctor.department}</span>
+                  <h3>{selectedDoctor.nameEn}</h3>
+                  <span className="doc-modal-hindi">{selectedDoctor.nameHi}</span>
+                </div>
+                <button
+                  type="button"
+                  className="doc-modal-close-btn"
+                  onClick={() => setSelectedDoctor(null)}
+                  aria-label="Close Profile"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              <div className="doc-modal-body">
+                <div className="doc-modal-profile-grid">
+                  <div className="doc-modal-photo">
+                    <img
+                      src={selectedDoctor.image}
+                      alt={selectedDoctor.nameEn}
+                    />
+                  </div>
+                  <div className="doc-modal-details">
+                    <div className="doc-modal-item">
+                      <b className="doc-modal-label">Specialist Qualifications & Degree</b>
+                      <p className="doc-modal-degree-hi">{selectedDoctor.degreeHi}</p>
+                      <p className="doc-modal-degree-en">{selectedDoctor.degreeEn}</p>
+                    </div>
+
+                    <div className="doc-modal-item">
+                      <b className="doc-modal-label">OPD & Consultation Schedule</b>
+                      <p className="doc-modal-timing">
+                        <Clock3 size={15} />
+                        <span>{selectedDoctor.timing}</span>
+                      </p>
+                    </div>
+
+                    <div className="doc-modal-item">
+                      <b className="doc-modal-label">Department / Specialty</b>
+                      <p className="doc-modal-dept">
+                        <Stethoscope size={15} />
+                        <span>{selectedDoctor.department} ({selectedDoctor.departmentHi})</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="doc-modal-bio">
+                  <b className="doc-modal-label">Clinical Overview</b>
+                  <p>{selectedDoctor.bio}</p>
+                </div>
+
+                <div className="doc-modal-actions">
+                  <a
+                    href="#appointment"
+                    className="button doc-modal-book-btn"
+                    onClick={() => setSelectedDoctor(null)}
+                  >
+                    Book Consultation <ArrowRight size={16} />
+                  </a>
+                  <a
+                    href={PHONE}
+                    className="button button-outline doc-modal-call-btn"
+                  >
+                    <Phone size={15} /> Call Hospital
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </section>
+  )
+}
+
 function EmergencySection() {
   return (
     <section className="section emergency-section" id="emergency">
@@ -686,7 +1042,7 @@ function Footer() {
     <footer>
       <div className="shell footer-grid">
         <div><Logo light /><p>Ethical, accessible and compassionate healthcare for Jalore and surrounding communities.</p><div className="socials"><a href="#" aria-label="Website"><Globe /></a><a href="#" aria-label="Photo gallery"><Camera /></a><a href="#" aria-label="WhatsApp"><MessageCircle /></a></div></div>
-        <div><h4>Quick links</h4>{[['Home','/'],['About Us','/#about'],['Our Doctor','/#doctor'],['Photo Gallery','/gallery'],['Contact Us','/contact'],['Book Appointment','/#appointment']].map(([x,h])=><a key={x} href={h}>{x}</a>)}</div>
+        <div><h4>Quick links</h4>{[['Home','/'],['About Us','/#about'],['Our Doctor','/#doctor'],['Specialists','/#doctors-panel'],['Photo Gallery','/gallery'],['Contact Us','/contact'],['Book Appointment','/#appointment']].map(([x,h])=><a key={x} href={h}>{x}</a>)}</div>
         <div><h4>Our specialties</h4>{['Critical Medicine (ICU/CCU)','Cardiology','Neurology','Urology','Orthopedics','Surgery','Dialysis','Investigations'].map(x=><a key={x} href="/#specialties">{x}</a>)}</div>
         <div><h4>Contact & location</h4><p className="footer-contact"><MapPin />Manpura Colony, Shivaji Nagar Colony, Jalore, Rajasthan 343001</p><p className="footer-contact"><Mail />info@jayshreehospital.in</p><a className="map-link" href={MAP_URL} target="_blank" rel="noreferrer">View on Google Maps <ArrowUpRight size={16} /></a></div>
       </div>
@@ -766,6 +1122,7 @@ function HomePage() {
         <Specialties />
         <SpecialInvestigations />
         <Doctor />
+        <OtherDoctors />
         <EmergencySection />
         <WhyUs />
         <AppointmentSection />
