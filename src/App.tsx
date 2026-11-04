@@ -1,5 +1,5 @@
-import { FormEvent, useEffect, useMemo, useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { FormEvent, useEffect, useMemo, useRef, useState } from 'react'
+import { AnimatePresence, motion, useInView } from 'framer-motion'
 import {
   Activity,
   Ambulance,
@@ -392,8 +392,63 @@ function QuickActions() {
   )
 }
 
+function Counter({
+  end,
+  duration = 1800,
+  prefix = '',
+  suffix = '',
+}: {
+  end: number
+  duration?: number
+  prefix?: string
+  suffix?: string
+}) {
+  const [count, setCount] = useState(0)
+  const ref = useRef<HTMLSpanElement>(null)
+  const isInView = useInView(ref, { once: true, margin: '-40px' })
+
+  useEffect(() => {
+    if (!isInView) return
+
+    let startTime: number | null = null
+    let animationFrameId: number
+
+    const step = (timestamp: number) => {
+      if (!startTime) startTime = timestamp
+      const elapsed = timestamp - startTime
+      const progress = Math.min(elapsed / duration, 1)
+
+      // Smooth ease-out cubic for realistic counting deceleration
+      const easeOut = 1 - Math.pow(1 - progress, 3)
+      setCount(Math.floor(easeOut * end))
+
+      if (progress < 1) {
+        animationFrameId = requestAnimationFrame(step)
+      } else {
+        setCount(end)
+      }
+    }
+
+    animationFrameId = requestAnimationFrame(step)
+    return () => cancelAnimationFrame(animationFrameId)
+  }, [isInView, end, duration])
+
+  return (
+    <span ref={ref}>
+      {prefix}
+      {count}
+      {suffix}
+    </span>
+  )
+}
+
 function About() {
-  const stats = [['24/7', 'Emergency & Pharmacy'], ['7+', 'Core specialties'], ['100%', 'Patient-centered care'], ['1000s', 'Happy patients']]
+  const stats = [
+    { value: 24, suffix: '/7', label: 'Emergency & Pharmacy' },
+    { value: 7, suffix: '+', label: 'Core specialties' },
+    { value: 100, suffix: '%', label: 'Patient-centered care' },
+    { value: 1000, suffix: 's', label: 'Happy patients' },
+  ]
   return (
     <section className="section about" id="about">
       <div className="shell about-grid">
@@ -411,9 +466,22 @@ function About() {
           <a href="/contact" className="text-link">Discover our approach <MoveRight size={18} /></a>
         </div>
       </div>
-      <div className="shell stats">
-        {stats.map(([n, l]) => <div key={l}><strong>{n}</strong><span>{l}</span></div>)}
-      </div>
+      <motion.div
+        className="shell stats"
+        initial={{ opacity: 0, y: 25 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.6 }}
+      >
+        {stats.map((s) => (
+          <div key={s.label}>
+            <strong>
+              <Counter end={s.value} suffix={s.suffix} />
+            </strong>
+            <span>{s.label}</span>
+          </div>
+        ))}
+      </motion.div>
     </section>
   )
 }
