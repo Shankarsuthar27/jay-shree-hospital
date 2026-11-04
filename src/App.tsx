@@ -327,7 +327,7 @@ function About() {
       <div className="shell about-grid">
         <motion.div className="about-images" initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
           <img className="about-main" src="/images/DSCF1552.jpg" alt="JayShree Hospital official reception emblem" />
-          <img className="about-small" src="/images/ambulance.jpg" alt="JayShree Hospital 24/7 on-call emergency ambulance" />
+          <img className="about-small" src="/images/modular-ot.jpg" alt="JayShree Hospital modular operation theater" />
           <div className="experience"><b>24/7</b><span>Emergency &<br />ambulance</span></div>
         </motion.div>
         <div>
