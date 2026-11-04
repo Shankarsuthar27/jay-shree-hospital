@@ -14,6 +14,7 @@ import {
   Check,
   ChevronRight,
   Clock3,
+  Droplets,
   Globe,
   HeartPulse,
   Mail,
@@ -36,13 +37,14 @@ const MAP_URL =
   'https://www.google.com/maps/place/Jayshree+hospital+jalore/@25.3447214,72.621866,4239m/data=!3m1!1e3!4m6!3m5!1s0x3943010063623da3:0xd778975d9fa48ace!8m2!3d25.3470334!4d72.6258287!16s%2Fg%2F11n3pxg5z9?authuser=0&entry=ttu'
 const PHONE = 'tel:+919999999999'
 const departments = [
-  'General Medicine & Critical Care',
+  'Critical Medicine (ICU/CCU)',
   'Cardiology',
   'Neurology',
-  'Orthopedics & Trauma',
   'Urology',
-  'General & Laparoscopic Surgery',
-  'Advanced Diagnostics',
+  'Orthopedics',
+  'Surgery',
+  'Dialysis',
+  'Investigations & Diagnostics',
 ]
 
 function Logo({ light = false }: { light?: boolean }) {
@@ -280,23 +282,71 @@ function About() {
 }
 
 const specialties = [
-  [Stethoscope, 'General Medicine & Critical Care', 'Diabetes, thyroid, hypertension, infections and comprehensive internal medicine.'],
-  [HeartPulse, 'Cardiology & Cardiac Care', 'ECG, 2D Echo, TMT, heart failure and hypertension management.'],
-  [Brain, 'Neurology', 'Focused care for stroke, migraine, epilepsy and neurological disorders.'],
-  [Activity, 'Orthopedics & Trauma', 'Fracture management, joint pain, arthritis and urgent trauma care.'],
-  [Syringe, 'Urology', 'Kidney stone, prostate and urinary tract evaluation and treatment.'],
-  [ShieldCheck, 'General & Laparoscopic Surgery', 'Safe elective and emergency surgical procedures with expert oversight.'],
-  [Microscope, 'Diagnostics & Pharmacy', 'Pathology, Digital X-Ray, Ultrasound and 24/7 in-house pharmacy.'],
+  [
+    Activity,
+    'Critical Medicine (ICU/CCU)',
+    '24/7 Level-III Intensive Care Unit with advanced mechanical ventilators, multipara monitors, and continuous specialist-led resuscitation.',
+  ],
+  [
+    HeartPulse,
+    'Cardiology',
+    'Comprehensive cardiac evaluation, ECG, 2D Echocardiography with Color Doppler, TMT, heart failure management, and acute cardiac care.',
+  ],
+  [
+    Brain,
+    'Neurology',
+    'Specialized neuro-care for acute ischemic stroke, epilepsy, severe migraine, neuro-muscular disorders, and neuro-trauma stabilization.',
+  ],
+  [
+    Syringe,
+    'Urology',
+    'Advanced treatment for kidney stones, prostate enlargement (BPH), urinary tract infections, and minimally invasive endo-urological procedures.',
+  ],
+  [
+    ShieldCheck,
+    'Orthopedics',
+    'Comprehensive trauma and accident care, complex fracture management, joint disorders, arthritis relief, and spine stabilization.',
+  ],
+  [
+    Building2,
+    'Surgery',
+    'Sterile modular operation theater equipped for general, elective, and advanced laparoscopic (keyhole) surgeries with minimal recovery time.',
+  ],
+  [
+    Droplets,
+    'Dialysis',
+    'Modern hemodialysis unit equipped with state-of-the-art dialysis machines, advanced RO water plant, and dedicated renal nephrology support.',
+  ],
+]
+
+const investigations = [
+  { name: 'Pathology & Blood Tests', desc: 'Automated hematology, clinical biochemistry, hormones, and routine microscopy.' },
+  { name: 'Digital X-Ray', desc: 'Instant high-resolution digital radiography for bone, joint, and chest diagnostics.' },
+  { name: '2D Echo, ECG & TMT', desc: 'Precision non-invasive cardiac function assessment and stress tests.' },
+  { name: 'Ultrasound (Sonography)', desc: 'Detailed abdominal, pelvic, vascular, and point-of-care emergency imaging.' },
+  { name: 'Renal & Dialysis Lab', desc: 'Continuous electrolyte, urea, creatinine, and pre/post-dialysis monitoring.' },
+  { name: '24/7 Emergency Pharmacy', desc: 'Complete availability of life-saving, ICU, surgical, and general medicines.' },
 ]
 
 function Specialties() {
   return (
     <section className="section specialties" id="specialties">
       <div className="shell">
-        <SectionTitle eyebrow="Centres of Excellence" title="Specialist expertise. One trusted address." text="Coordinated medical services designed around your needs, with diagnosis and treatment under one roof." center />
+        <SectionTitle
+          eyebrow="Specialities & Investigations"
+          title="Specialist expertise. One trusted address."
+          text="Coordinated medical services designed around your needs, with diagnosis and treatment under one roof."
+          center
+        />
         <div className="specialty-grid">
           {specialties.map(([Icon, title, text], i) => (
-            <motion.article key={title as string} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * .05 }}>
+            <motion.article
+              key={title as string}
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.05 }}
+            >
               <span className="specialty-icon"><Icon size={28} /></span>
               <span className="card-number">0{i + 1}</span>
               <h3>{title as string}</h3>
@@ -304,6 +354,30 @@ function Specialties() {
               <a href="#appointment">Request consultation <ArrowRight size={16} /></a>
             </motion.article>
           ))}
+        </div>
+
+        <div className="investigations-box">
+          <div className="investigations-header">
+            <div className="investigations-title">
+              <span className="investigations-icon"><Microscope size={26} /></span>
+              <div>
+                <h3>Diagnostic & Clinical Investigations</h3>
+                <p>Fully equipped in-house testing facilities for accurate, rapid clinical answers under one roof.</p>
+              </div>
+            </div>
+            <a href="#appointment" className="button button-small">Book An Investigation</a>
+          </div>
+          <div className="investigations-grid">
+            {investigations.map((item) => (
+              <div key={item.name} className="investigation-item">
+                <span className="investigation-check"><Check size={14} /></span>
+                <div>
+                  <b>{item.name}</b>
+                  <p>{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -501,7 +575,7 @@ function Footer() {
       <div className="shell footer-grid">
         <div><Logo light /><p>Ethical, accessible and compassionate healthcare for Jalore and surrounding communities.</p><div className="socials"><a href="#" aria-label="Website"><Globe /></a><a href="#" aria-label="Photo gallery"><Camera /></a><a href="#" aria-label="WhatsApp"><MessageCircle /></a></div></div>
         <div><h4>Quick links</h4>{[['Home','/'],['About Us','/#about'],['Our Doctor','/#doctor'],['Photo Gallery','/gallery'],['Contact Us','/contact'],['Book Appointment','/#appointment']].map(([x,h])=><a key={x} href={h}>{x}</a>)}</div>
-        <div><h4>Our specialties</h4>{['General Medicine','Cardiology','Neurology','Orthopedics','Urology','General Surgery','Diagnostics & Pharmacy'].map(x=><a key={x} href="/#specialties">{x}</a>)}</div>
+        <div><h4>Our specialties</h4>{['Critical Medicine (ICU/CCU)','Cardiology','Neurology','Urology','Orthopedics','Surgery','Dialysis','Investigations'].map(x=><a key={x} href="/#specialties">{x}</a>)}</div>
         <div><h4>Contact & location</h4><p className="footer-contact"><MapPin />Manpura Colony, Shivaji Nagar Colony, Jalore, Rajasthan 343001</p><p className="footer-contact"><Mail />info@jayshreehospital.in</p><a className="map-link" href={MAP_URL} target="_blank" rel="noreferrer">View on Google Maps <ArrowUpRight size={16} /></a></div>
       </div>
       <div className="footer-bottom"><div className="shell"><span>© 2025 JayShree Hospital Jalore. All Rights Reserved.</span><span>Coordinates: 25.3470334, 72.6258287</span></div></div>
