@@ -1,5 +1,12 @@
 {
-  "description": "A simple greeting page that welcomes visitors and offers a friendly starting point for conversation.",
+  "title": "JayShree Hospital | Best Multispeciality Hospital in Jalore",
+  "description": "Ethical, accessible and compassionate healthcare for Jalore and surrounding communities.",
+  "icons": {
+    "icon": "/favicon.svg"
+  },
+  "openGraph": {
+    "image": "/logo/logo.png"
+  },
   "robots": {
     "index": false
   },

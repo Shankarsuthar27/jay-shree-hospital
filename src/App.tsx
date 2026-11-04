@@ -47,14 +47,19 @@ const departments = [
 
 function Logo({ light = false }: { light?: boolean }) {
   return (
-    <a href="/" className="logo" aria-label="JayShree Hospital home">
-      <span className="logo-mark">
-        <span>JS</span>
-        <i>+</i>
-      </span>
+    <a href="/" className={`logo ${light ? 'logo-light' : ''}`} aria-label="JayShree Hospital home">
+      <div className="logo-badge">
+        <img
+          src="/logo/logo-transparent.png"
+          alt="JayShree Hospital Logo"
+          className="logo-img"
+          width="48"
+          height="55"
+        />
+      </div>
       <span className="logo-copy">
         <b className={light ? 'text-white' : ''}>JayShree Hospital</b>
-        <small>Your Health, Our Commitment</small>
+        <small className={light ? 'text-blue-200/80' : ''}>Your Health, Our Commitment</small>
       </span>
     </a>
   )
@@ -127,33 +132,98 @@ function SectionTitle({ eyebrow, title, text, center = false }: { eyebrow: strin
   )
 }
 
+const heroSlides = [
+  {
+    image: '/images/main1.jpg',
+    badge: 'Welcome to JayShree Hospital, Jalore',
+    title: (
+      <>
+        Advanced healthcare.<br />
+        <em>Genuine compassion.</em>
+      </>
+    ),
+    text: 'Your Health, Our Commitment — state-of-the-art multispecialty care, advanced diagnostics, and 24/7 emergency support under expert guidance.',
+    primaryBtn: { text: 'Book An Appointment', href: '#appointment', isEmergency: false },
+  },
+  {
+    image: '/images/main2.jpg',
+    badge: 'Modern Multispeciality Infrastructure',
+    title: (
+      <>
+        Comprehensive care.<br />
+        <em>One trusted destination.</em>
+      </>
+    ),
+    text: 'Experienced consultants, modular surgical facilities, in-house pathology, and patient-centered healing in the heart of Jalore.',
+    primaryBtn: { text: 'Our Specialties', href: '#specialties', isEmergency: false },
+  },
+  {
+    image: '/images/ambulance.jpg',
+    badge: '24/7 Emergency & Rapid Response',
+    title: (
+      <>
+        Always on standby.<br />
+        <em>24/7 Emergency ambulance.</em>
+      </>
+    ),
+    text: 'Equipped life-support emergency ambulance with oxygen and trauma readiness on call round-the-clock for Jalore and nearby communities.',
+    primaryBtn: { text: 'Call Emergency Ambulance', href: PHONE, isEmergency: true },
+  },
+]
+
 function Hero() {
   const [slide, setSlide] = useState(0)
-  const images = ['/images/main1.jpg', '/images/main2.jpg']
   useEffect(() => {
-    const id = window.setInterval(() => setSlide((v) => (v + 1) % 2), 6000)
+    const id = window.setInterval(() => setSlide((v) => (v + 1) % heroSlides.length), 6500)
     return () => window.clearInterval(id)
   }, [])
+  const current = heroSlides[slide]
+  const prevSlide = () => setSlide((s) => (s - 1 + heroSlides.length) % heroSlides.length)
+  const nextSlide = () => setSlide((s) => (s + 1) % heroSlides.length)
+
   return (
     <section className="hero">
       <AnimatePresence mode="popLayout">
-        <motion.img key={images[slide]} src={images[slide]} alt="JayShree Hospital exterior" initial={{ opacity: 0, scale: 1.04 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 1.1 }} />
+        <motion.img
+          key={current.image}
+          src={current.image}
+          alt={current.badge}
+          initial={{ opacity: 0, scale: 1.04 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.1 }}
+        />
       </AnimatePresence>
       <div className="hero-overlay" />
       <div className="shell hero-inner">
-        <motion.div className="hero-content" initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .7 }}>
-          <div className="hero-badge"><span /> Welcome to JayShree Hospital, Jalore</div>
-          <h1>Advanced healthcare.<br /><em>Genuine compassion.</em></h1>
-          <p>Your Health, Our Commitment — state-of-the-art multispecialty care, advanced diagnostics, and 24/7 emergency support under expert guidance.</p>
+        <motion.div
+          key={slide}
+          className="hero-content"
+          initial={{ opacity: 0, y: 22 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="hero-badge"><span /> {current.badge}</div>
+          <h1>{current.title}</h1>
+          <p>{current.text}</p>
           <div className="hero-buttons">
-            <a href="#appointment" className="button">Book An Appointment <ArrowRight size={18} /></a>
-            <a href={MAP_URL} target="_blank" rel="noreferrer" className="button button-glass"><MapPin size={18} /> Get Directions</a>
+            <a
+              href={current.primaryBtn.href}
+              className={`button ${current.primaryBtn.isEmergency ? 'button-red' : ''}`}
+            >
+              {current.primaryBtn.isEmergency ? <Ambulance size={18} /> : null}
+              {current.primaryBtn.text}
+              <ArrowRight size={18} />
+            </a>
+            <a href={MAP_URL} target="_blank" rel="noreferrer" className="button button-glass">
+              <MapPin size={18} /> Get Directions
+            </a>
           </div>
         </motion.div>
         <div className="hero-controls">
-          <button onClick={() => setSlide((slide + 1) % 2)} aria-label="Previous slide"><ArrowLeft /></button>
-          <span>0{slide + 1} <i><b style={{ width: `${(slide + 1) * 50}%` }} /></i> 02</span>
-          <button onClick={() => setSlide((slide + 1) % 2)} aria-label="Next slide"><ArrowRight /></button>
+          <button onClick={prevSlide} aria-label="Previous slide"><ArrowLeft /></button>
+          <span>0{slide + 1} <i><b style={{ width: `${((slide + 1) / heroSlides.length) * 100}%` }} /></i> 0{heroSlides.length}</span>
+          <button onClick={nextSlide} aria-label="Next slide"><ArrowRight /></button>
         </div>
       </div>
     </section>
@@ -190,8 +260,8 @@ function About() {
       <div className="shell about-grid">
         <motion.div className="about-images" initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
           <img className="about-main" src="/images/DSCF1552.jpg" alt="JayShree Hospital official reception emblem" />
-          <img className="about-small" src="/images/main1.jpg" alt="JayShree Hospital modern building" />
-          <div className="experience"><b>24</b><span>Hours of care<br />every day</span></div>
+          <img className="about-small" src="/images/ambulance.jpg" alt="JayShree Hospital 24/7 on-call emergency ambulance" />
+          <div className="experience"><b>24/7</b><span>Emergency &<br />ambulance</span></div>
         </motion.div>
         <div>
           <SectionTitle eyebrow="About JayShree Hospital" title="Dependable care, closer to home." text="A trusted multispecialty hospital in Jalore, created to make modern, ethical healthcare accessible to every family in our region." />
@@ -262,6 +332,83 @@ function Doctor() {
           </div>
           <a href="#appointment" className="button">Book consultation <ArrowRight size={18} /></a>
         </div>
+      </div>
+    </section>
+  )
+}
+
+function EmergencySection() {
+  return (
+    <section className="section emergency-section" id="emergency">
+      <div className="shell emergency-grid">
+        <motion.div
+          className="emergency-photo-card"
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <img
+            src="/images/ambulance.jpg"
+            alt="JayShree Hospital 24/7 On-Duty Emergency Ambulance"
+          />
+          <div className="emergency-photo-badge">
+            <span className="pulse-indicator" />
+            <div>
+              <b>24/7 Rapid Ambulance Service</b>
+              <small>On Standby · Jalore & Surrounding Areas</small>
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.div
+          className="emergency-info"
+          initial={{ opacity: 0, x: 20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <SectionTitle
+            eyebrow="24/7 Emergency & Critical Care"
+            title="Immediate emergency response when minutes matter most."
+            text="JayShree Hospital maintains a dedicated, fully equipped emergency ambulance on hospital premises with trained emergency medical responders, oxygen support, and priority triage."
+          />
+
+          <div className="emergency-features">
+            <div className="emergency-feature-item">
+              <span className="feature-icon"><HeartPulse size={20} /></span>
+              <div>
+                <h4>Oxygen & Vital Life Support</h4>
+                <p>Equipped with emergency oxygen cylinders, patient monitoring, and trauma resuscitation kits.</p>
+              </div>
+            </div>
+
+            <div className="emergency-feature-item">
+              <span className="feature-icon"><Ambulance size={20} /></span>
+              <div>
+                <h4>Trained Emergency Medical Staff</h4>
+                <p>Experienced emergency nursing and paramedic support during transfer for patient stabilization.</p>
+              </div>
+            </div>
+
+            <div className="emergency-feature-item">
+              <span className="feature-icon"><Clock3 size={20} /></span>
+              <div>
+                <h4>Zero-Wait Hospital Handover</h4>
+                <p>Direct pre-arrival communication with on-duty physicians so trauma and critical care teams are ready.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="emergency-cta-group">
+            <a href={PHONE} className="button button-red emergency-call-btn">
+              <Phone size={18} /> Call Ambulance: 24/7 Helpline
+            </a>
+            <a href={MAP_URL} target="_blank" rel="noreferrer" className="button button-outline">
+              <MapPin size={18} /> View Hospital Location
+            </a>
+          </div>
+        </motion.div>
       </div>
     </section>
   )
@@ -369,6 +516,7 @@ function PageHero({ title, crumb, image }: { title: string; crumb: string; image
 const galleryImages = [
   ['/images/main1.jpg', 'JayShree Hospital modern exterior facade', 'Exterior'],
   ['/images/main2.jpg', 'Hospital entrance and patient access', 'Exterior'],
+  ['/images/ambulance.jpg', '24/7 JayShree Hospital Emergency Ambulance Unit', 'Exterior'],
   ['/images/DSCF0537.jpg', 'Contemporary hospital architecture', 'Exterior'],
   ['/images/DSCF0538.jpg', 'JayShree Hospital building elevation', 'Exterior'],
   ['/images/DSCF0539.jpg', 'Main entrance and ground floor facilities', 'Exterior'],
@@ -413,7 +561,23 @@ function ContactPage() {
 }
 
 function HomePage() {
-  return <><Header /><main><Hero /><QuickActions /><About /><Specialties /><Doctor /><WhyUs /><AppointmentSection /><Testimonials /></main><Footer /></>
+  return (
+    <>
+      <Header />
+      <main>
+        <Hero />
+        <QuickActions />
+        <About />
+        <Specialties />
+        <Doctor />
+        <EmergencySection />
+        <WhyUs />
+        <AppointmentSection />
+        <Testimonials />
+      </main>
+      <Footer />
+    </>
+  )
 }
 
 export default function App() {
