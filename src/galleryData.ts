@@ -9,6 +9,36 @@ export interface GalleryItem {
 
 export const galleryImages: GalleryItem[] = [
   {
+    "id": "fac-1",
+    "src": "/images/facility-emergency-wing.jpg",
+    "title": "24/7 Emergency & Trauma Care Wing with direct on-site diagnostic access",
+    "category": "Facilities"
+  },
+  {
+    "id": "fac-2",
+    "src": "/images/facility-modular-ot.jpg",
+    "title": "Korean Modular Operation Theater with C-Arm and sterile laminar airflow",
+    "category": "Facilities"
+  },
+  {
+    "id": "fac-3",
+    "src": "/images/facility-icu-ventilator.jpg",
+    "title": "Advanced Life-Support ICU Station equipped with mechanical ventilators",
+    "category": "Facilities"
+  },
+  {
+    "id": "fac-4",
+    "src": "/images/facility-icu-beds.jpg",
+    "title": "High-dependency patient recovery beds with cardiac monitoring consoles",
+    "category": "Wards"
+  },
+  {
+    "id": "fac-5",
+    "src": "/images/facility-maternity-suite.jpg",
+    "title": "Maternity, labor and neonatal delivery room with infant warming setup",
+    "category": "Facilities"
+  },
+  {
     "id": "cur-1",
     "src": "/images/main1.jpg",
     "title": "JayShree Hospital modern exterior facade",

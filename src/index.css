@@ -326,6 +326,181 @@ footer { background: #09162d; color: #9baac0; padding-top: 75px; }
 .button-red { background: var(--red); }
 .button-outline { background: white; color: var(--blue); border: 1px solid #bac9dc; box-shadow: none; }
 
+/* --- World-Class Clinical Facilities Section --- */
+.facilities-section {
+  background: #ffffff;
+  padding: 100px 0 105px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.facilities-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 24px;
+  margin-top: 45px;
+}
+.facility-card {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(16, 43, 118, 0.05);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.facility-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 40px rgba(16, 43, 118, 0.12);
+  border-color: #cbd5e1;
+}
+.facility-card-featured {
+  grid-column: span 3;
+}
+.facility-card-standard {
+  grid-column: span 2;
+}
+.facility-image-wrap {
+  position: relative;
+  width: 100%;
+  height: 270px;
+  overflow: hidden;
+  background: #0f172a;
+}
+.facility-card-featured .facility-image-wrap {
+  height: 310px;
+}
+.facility-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.facility-card:hover .facility-image-wrap img {
+  transform: scale(1.05);
+}
+.facility-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: rgba(16, 43, 118, 0.92);
+  color: #ffffff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 5px 12px;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+  border-left: 3px solid var(--cyan);
+}
+.facility-zoom-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--blue);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transform: translateY(-5px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.facility-card:hover .facility-zoom-btn {
+  opacity: 1;
+  transform: translateY(0);
+}
+.facility-content {
+  padding: 24px 26px 26px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+}
+.facility-eyebrow {
+  color: var(--cyan);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 6px;
+  display: block;
+}
+.facility-title {
+  margin: 0 0 10px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.32;
+  color: var(--blue-dark);
+  letter-spacing: -0.025em;
+}
+.facility-card-featured .facility-title {
+  font-size: 21px;
+}
+.facility-desc {
+  margin: 0 0 18px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.facility-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.facility-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #edf5ff;
+  color: var(--blue);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 3px;
+}
+.facility-pill svg {
+  color: var(--green);
+}
+.facilities-footer {
+  margin-top: 45px;
+  padding: 24px 30px;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  box-shadow: 0 4px 16px rgba(16, 43, 118, 0.04);
+}
+.facilities-footer p {
+  margin: 0;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14.5px;
+  color: var(--ink);
+  font-weight: 600;
+}
+.facilities-footer p small {
+  display: block;
+  font-weight: 400;
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 2px;
+}
+
 /* --- Other Doctors / Specialist Panel Section --- */
 .other-doctors-section {
   background: var(--soft);
@@ -760,6 +935,9 @@ footer { background: #09162d; color: #9baac0; padding-top: 75px; }
 @media (max-width: 1080px) {
   .desktop-nav { display: none; }.menu-button { display: block; }.nav-actions { margin-left: auto; }
   .about-grid, .doctor-grid { gap: 55px; }.quick-grid { grid-template-columns: repeat(2,1fr); }.quick-grid > a:nth-child(2){border-right:0}.quick-grid > a { border-bottom: 1px solid var(--line); }
+  .facilities-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .facility-card-featured, .facility-card-standard { grid-column: span 1; }
+  .facility-card:last-child { grid-column: span 2; }
 }
 @media (max-width: 800px) {
   .section { padding: 75px 0; }.utility-right { display: none; }.utility-inner { justify-content: center; }.utility-group { gap: 14px; }
@@ -808,6 +986,11 @@ footer { background: #09162d; color: #9baac0; padding-top: 75px; }
   .form-card { padding: 24px 20px; }.form-grid { grid-template-columns: 1fr; }.field-full { grid-column: 1; }.appointment-grid { gap: 50px; }
   .footer-grid { grid-template-columns: 1fr; gap: 38px; }.footer-bottom .shell { flex-direction:column;gap:6px}.page-hero { height: 340px; }.page-hero h1 { font-size: 36px; }
   .gallery-grid { grid-template-columns: 1fr; grid-auto-rows:250px}.gallery-grid button.wide{grid-column:auto}.filters{justify-content:flex-start}
+  .facilities-grid { grid-template-columns: 1fr; gap: 18px; }
+  .facility-card-featured, .facility-card-standard, .facility-card:last-child { grid-column: span 1; }
+  .facility-image-wrap, .facility-card-featured .facility-image-wrap { height: 235px; }
+  .facilities-footer { flex-direction: column; align-items: stretch; text-align: center; gap: 16px; padding: 20px; }
+  .facilities-footer .button { width: 100%; justify-content: center; }
   .lightbox { padding: 50px 14px; }.lightbox figure { max-width: 100%; }.lightbox-prev,.lightbox-next{top:auto;bottom:20px}.lightbox-prev{left:calc(50% - 55px)}.lightbox-next{right:calc(50% - 55px)}
   .contact-cards { grid-template-columns: 1fr; }.contact-cards article:last-child{grid-column:auto}.contact-form-wrap{padding:35px 20px}.contact-form-wrap .section-title h2{font-size:33px}.map-wrap>div{flex-wrap:wrap}.map-wrap p{width:calc(100% - 55px)}.map-wrap .button{width:100%}
   .toast { left: 14px; right: 14px; min-width: 0; }.mobile-menu { padding: 20px; }

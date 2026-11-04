@@ -37,6 +37,7 @@ import {
   Users,
   Waves,
   X,
+  ZoomIn,
 } from 'lucide-react'
 import { galleryImages, GalleryItem } from './galleryData'
 
@@ -1007,6 +1008,212 @@ function OtherDoctors() {
   )
 }
 
+interface FacilityItem {
+  id: string
+  title: string
+  eyebrow: string
+  image: string
+  description: string
+  features: string[]
+  badge: string
+}
+
+const hospitalFacilities: FacilityItem[] = [
+  {
+    id: 'emergency-wing',
+    eyebrow: 'IMMEDIATE TRIAGE & STABILIZATION',
+    title: '24/7 Emergency & Trauma Center',
+    image: '/images/facility-emergency-wing.jpg',
+    description: 'Direct ground-floor emergency wing designed for zero-delay triage, immediate resuscitation, and seamless corridor access to ICU, CT Scan, X-Ray, Sonography, and 24/7 Pathology.',
+    features: ['Rapid Triage & Resuscitation', 'Connected Diagnostic Corridor', '24/7 Trauma Medical Team'],
+    badge: 'Emergency Care Wing',
+  },
+  {
+    id: 'modular-ot',
+    eyebrow: 'SURGICAL EXCELLENCE',
+    title: 'Korean Modular Operation Theater',
+    image: '/images/facility-modular-ot.jpg',
+    description: 'Ultra-clean sterile surgical suite equipped with advanced C-Arm fluoroscopy, precision anesthesia workstation, and laminar airflow to prevent surgical infections.',
+    features: ['Sterile Laminar Airflow', 'C-Arm Fluoroscopy Guidance', 'Precision Anesthesia Workstation'],
+    badge: 'Modular Surgical Suite',
+  },
+  {
+    id: 'icu-ventilator',
+    eyebrow: 'CRITICAL CARE & LIFE SUPPORT',
+    title: 'Advanced ICU & Ventilator Unit',
+    image: '/images/facility-icu-ventilator.jpg',
+    description: 'High-dependency intensive care station with state-of-the-art mechanical ventilators, continuous multi-parameter cardiac monitoring, and dedicated central medical gas lines.',
+    features: ['Mechanical Ventilators', 'Multipara Cardiac Monitors', 'Central Medical Gas Lines'],
+    badge: 'Life-Support ICU',
+  },
+  {
+    id: 'icu-beds',
+    eyebrow: 'PATIENT CARE & RECOVERY',
+    title: 'Monitored Inpatient Recovery Wards',
+    image: '/images/facility-icu-beds.jpg',
+    description: 'Modern inpatient recovery rooms featuring motorized adjustable hospital beds, individualized bedside vitals consoles, nurse call systems, and continuous clinical oversight.',
+    features: ['Motorized Adjustable Beds', 'Bedside Vitals Consoles', '24/7 Dedicated Nursing Care'],
+    badge: 'Inpatient Recovery Wards',
+  },
+  {
+    id: 'maternity-suite',
+    eyebrow: 'WOMEN & CHILD HEALTH',
+    title: 'Maternity, Labor & Neonatal Suite',
+    image: '/images/facility-maternity-suite.jpg',
+    description: 'Specialized labor and delivery room equipped with dedicated birthing table, continuous fetal monitoring, infant resuscitation setup, and neonatal care equipment.',
+    features: ['Specialized Labor Table', 'Fetal Heart Monitoring', 'Radiant Infant Care Station'],
+    badge: 'Maternity & Labor Suite',
+  },
+]
+
+function FacilitiesSection() {
+  const [activeLightbox, setActiveLightbox] = useState<number | null>(null)
+
+  const move = (delta: number) => {
+    setActiveLightbox((prev) => {
+      if (prev === null) return null
+      return (prev + delta + hospitalFacilities.length) % hospitalFacilities.length
+    })
+  }
+
+  useEffect(() => {
+    if (activeLightbox === null) return
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setActiveLightbox(null)
+      if (e.key === 'ArrowLeft') move(-1)
+      if (e.key === 'ArrowRight') move(1)
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [activeLightbox])
+
+  return (
+    <section className="section facilities-section" id="facilities">
+      <div className="shell">
+        <SectionTitle
+          eyebrow="CLINICAL INFRASTRUCTURE"
+          title="World-Class Medical Facilities"
+          text="Explore real photographs of our modern medical infrastructure in Jalore — featuring our Korean modular operation theater, life-support ICU unit, 24/7 emergency center, and maternity suite."
+          center
+        />
+
+        <div className="facilities-grid">
+          {hospitalFacilities.map((fac, idx) => (
+            <motion.article
+              key={fac.id}
+              className={`facility-card ${idx < 2 ? 'facility-card-featured' : 'facility-card-standard'}`}
+              initial={{ opacity: 0, y: 22 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.5, delay: idx * 0.08 }}
+              onClick={() => setActiveLightbox(idx)}
+              aria-label={`View ${fac.title}`}
+            >
+              <div className="facility-image-wrap">
+                <img src={fac.image} alt={fac.title} loading="lazy" />
+                <span className="facility-badge">{fac.badge}</span>
+                <span className="facility-zoom-btn" title="Expand Photo">
+                  <ZoomIn size={17} />
+                </span>
+              </div>
+
+              <div className="facility-content">
+                <div>
+                  <span className="facility-eyebrow">{fac.eyebrow}</span>
+                  <h3 className="facility-title">{fac.title}</h3>
+                  <p className="facility-desc">{fac.description}</p>
+                </div>
+
+                <ul className="facility-pills">
+                  {fac.features.map((feat) => (
+                    <li key={feat} className="facility-pill">
+                      <Check size={13} strokeWidth={2.4} />
+                      <span>{feat}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </motion.article>
+          ))}
+        </div>
+
+        <div className="facilities-footer">
+          <p>
+            Looking for a complete look into our hospital infrastructure, wards, and patient lounges?
+            <small>Browse over 100+ authentic high-resolution photographs in our official photo archive.</small>
+          </p>
+          <a href="/gallery" className="button button-small">
+            Explore All 100+ Photos <ArrowRight size={16} />
+          </a>
+        </div>
+      </div>
+
+      <AnimatePresence>
+        {activeLightbox !== null && hospitalFacilities[activeLightbox] && (
+          <motion.div
+            className="lightbox"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setActiveLightbox(null)}
+          >
+            <button
+              className="lightbox-close"
+              onClick={() => setActiveLightbox(null)}
+              aria-label="Close photo view"
+            >
+              <X />
+            </button>
+            <button
+              className="lightbox-prev"
+              onClick={(e) => {
+                e.stopPropagation()
+                move(-1)
+              }}
+              aria-label="Previous photo"
+            >
+              <ArrowLeft />
+            </button>
+            <motion.figure
+              key={hospitalFacilities[activeLightbox].id}
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.96 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src={hospitalFacilities[activeLightbox].image}
+                alt={hospitalFacilities[activeLightbox].title}
+              />
+              <figcaption>
+                <div className="lightbox-caption-text">
+                  <span className="lightbox-cat-tag">
+                    {hospitalFacilities[activeLightbox].badge}
+                  </span>
+                  <b>{hospitalFacilities[activeLightbox].title}</b>
+                </div>
+                <small>
+                  {activeLightbox + 1} / {hospitalFacilities.length}
+                </small>
+              </figcaption>
+            </motion.figure>
+            <button
+              className="lightbox-next"
+              onClick={(e) => {
+                e.stopPropagation()
+                move(1)
+              }}
+              aria-label="Next photo"
+            >
+              <ArrowRight />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </section>
+  )
+}
+
 function EmergencySection() {
   return (
     <section className="section emergency-section" id="emergency">
@@ -1408,6 +1615,7 @@ function HomePage() {
         <SpecialInvestigations />
         <Doctor />
         <OtherDoctors />
+        <FacilitiesSection />
         <EmergencySection />
         <WhyUs />
         <AppointmentSection />
