@@ -37,7 +37,6 @@ import {
   Users,
   Waves,
   X,
-  ZoomIn,
 } from 'lucide-react'
 import { galleryImages, GalleryItem } from './galleryData'
 
@@ -1047,165 +1046,6 @@ function PageHero({ title, crumb, image }: { title: string; crumb: string; image
   return <section className="page-hero"><img src={image} alt="" /><div className="page-overlay" /><div className="shell"><div className="breadcrumb"><a href="/">Home</a><ChevronRight size={14} /><span>{crumb}</span></div><h1>{title}</h1></div></section>
 }
 
-function HomeGallery() {
-  const [activeTab, setActiveTab] = useState<'All' | 'Facilities' | 'Reception' | 'Exterior' | 'Wards' | 'Moments'>('All')
-  const [activeLightbox, setActiveLightbox] = useState<number | null>(null)
-
-  const filtered = useMemo(() => {
-    if (activeTab === 'All') {
-      return galleryImages.filter((img) => img.featuredHome).slice(0, 12)
-    }
-    return galleryImages.filter((img) => img.category === activeTab).slice(0, 12)
-  }, [activeTab])
-
-  const move = (delta: number) => {
-    setActiveLightbox((prev) => {
-      if (prev === null) return null
-      return (prev + delta + filtered.length) % filtered.length
-    })
-  }
-
-  useEffect(() => {
-    if (activeLightbox === null) return
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setActiveLightbox(null)
-      if (e.key === 'ArrowLeft') move(-1)
-      if (e.key === 'ArrowRight') move(1)
-    }
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [activeLightbox, filtered.length])
-
-  const tabs: { key: 'All' | 'Facilities' | 'Reception' | 'Exterior' | 'Wards' | 'Moments'; label: string }[] = [
-    { key: 'All', label: 'Featured Highlights' },
-    { key: 'Facilities', label: 'Modular O.T. & ICU' },
-    { key: 'Reception', label: 'Reception & Lobby' },
-    { key: 'Exterior', label: 'Hospital Building' },
-    { key: 'Wards', label: 'Inpatient Rooms' },
-    { key: 'Moments', label: 'Hospital Moments' },
-  ]
-
-  return (
-    <section className="section home-gallery-section" id="infrastructure">
-      <div className="shell">
-        <SectionTitle
-          eyebrow="CAMPUS & INFRASTRUCTURE"
-          title="Inside JayShree Hospital"
-          text="Explore real photographs of our modern hospital building, Korean modular operation theater, 24/7 ICU, patient recovery rooms, and welcoming reception lobby."
-          center
-        />
-
-        <div className="filters home-gallery-filters">
-          {tabs.map((tab) => (
-            <button
-              key={tab.key}
-              className={activeTab === tab.key ? 'active' : ''}
-              onClick={() => setActiveTab(tab.key)}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
-
-        <motion.div layout className="home-gallery-grid">
-          {filtered.map((item, idx) => (
-            <motion.button
-              layout
-              key={item.id}
-              className={`home-gallery-card ${idx === 0 || idx === 7 ? 'featured-card' : ''}`}
-              onClick={() => setActiveLightbox(idx)}
-              aria-label={`View photo: ${item.title}`}
-            >
-              <img src={item.src} alt={item.title} loading="lazy" />
-              <div className="home-gallery-card-overlay">
-                <span className="home-gallery-category-badge">{item.category}</span>
-                <p className="home-gallery-card-title">{item.title}</p>
-                <span className="home-gallery-zoom-pill">
-                  <ZoomIn size={15} /> Expand Photo
-                </span>
-              </div>
-            </motion.button>
-          ))}
-        </motion.div>
-
-        <div className="home-gallery-cta-banner">
-          <div className="home-gallery-cta-content">
-            <span className="home-gallery-cta-badge">100+ Real Hospital Photos</span>
-            <h3>Explore Every Corner of JayShree Hospital</h3>
-            <p>
-              Browse our complete photographic archive with over 100 high-resolution images covering all operation suites, patient wards, intensive care units, and campus facilities.
-            </p>
-          </div>
-          <a href="/gallery" className="button">
-            View All 100+ Photos <ArrowRight size={17} />
-          </a>
-        </div>
-      </div>
-
-      <AnimatePresence>
-        {activeLightbox !== null && filtered[activeLightbox] && (
-          <motion.div
-            className="lightbox"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setActiveLightbox(null)}
-          >
-            <button
-              className="lightbox-close"
-              onClick={() => setActiveLightbox(null)}
-              aria-label="Close photo view"
-            >
-              <X />
-            </button>
-            <button
-              className="lightbox-prev"
-              onClick={(e) => {
-                e.stopPropagation()
-                move(-1)
-              }}
-              aria-label="Previous photo"
-            >
-              <ArrowLeft />
-            </button>
-            <motion.figure
-              key={filtered[activeLightbox].id}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <img
-                src={filtered[activeLightbox].src}
-                alt={filtered[activeLightbox].title}
-              />
-              <figcaption>
-                <div className="lightbox-caption-text">
-                  <span className="lightbox-cat-tag">{filtered[activeLightbox].category}</span>
-                  <b>{filtered[activeLightbox].title}</b>
-                </div>
-                <small>
-                  {activeLightbox + 1} / {filtered.length}
-                </small>
-              </figcaption>
-            </motion.figure>
-            <button
-              className="lightbox-next"
-              onClick={(e) => {
-                e.stopPropagation()
-                move(1)
-              }}
-              aria-label="Next photo"
-            >
-              <ArrowRight />
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </section>
-  )
-}
-
 function GalleryPage() {
   const [filter, setFilter] = useState<'All' | 'Facilities' | 'Reception' | 'Exterior' | 'Wards' | 'Moments'>('All')
   const [active, setActive] = useState<number | null>(null)
@@ -1433,7 +1273,6 @@ function HomePage() {
         <OtherDoctors />
         <EmergencySection />
         <WhyUs />
-        <HomeGallery />
         <AppointmentSection />
         <Testimonials />
       </main>
