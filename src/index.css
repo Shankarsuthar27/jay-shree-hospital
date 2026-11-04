@@ -57,17 +57,17 @@ a { color: inherit; text-decoration: none; }
 @keyframes pulse { 50% { transform: scale(1.13); } }
 .menu-button { display: none; border: 0; background: transparent; color: var(--ink); }
 .hero { height: 690px; position: relative; overflow: hidden; color: white; }
-.hero-mobile-bg { display: none; }
+.hero-mobile-bg { display: none; filter: brightness(1.05) contrast(1.03); }
 .hero-desktop-slides { position: absolute; inset: 0; width: 100%; height: 100%; }
-.hero-desktop-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 35%; }
-.hero-overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(8,20,44,.92) 0%, rgba(11,30,61,.73) 43%, rgba(15,23,42,.15) 80%), linear-gradient(0deg, rgba(8,18,37,.45), transparent 45%); }
+.hero-desktop-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 35%; filter: brightness(1.04) contrast(1.03); }
+.hero-overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(8,20,44,.68) 0%, rgba(8,20,44,.38) 36%, rgba(8,20,44,.08) 65%, transparent 82%); }
 .hero-inner { position: relative; height: 100%; display: flex; align-items: center; }
 .hero-content { width: 680px; margin-top: -24px; }
-.hero-badge { display: inline-flex; align-items: center; gap: 10px; padding: 8px 13px; border: 1px solid rgba(255,255,255,.24); background: rgba(255,255,255,.1); backdrop-filter: blur(8px); text-transform: uppercase; font-size: 10px; letter-spacing: .16em; font-weight: 700; }
+.hero-badge { display: inline-flex; align-items: center; gap: 10px; padding: 8px 13px; border: 1px solid rgba(255,255,255,.35); background: rgba(8,20,44,.5); backdrop-filter: blur(10px); text-transform: uppercase; font-size: 10px; letter-spacing: .16em; font-weight: 700; box-shadow: 0 4px 15px rgba(0,0,0,.25); }
 .hero-badge span { width: 7px; height: 7px; border-radius: 50%; background: #77b926; box-shadow: 0 0 0 4px rgba(119,185,38,.17); }
-.hero h1 { margin: 24px 0 18px; font-size: clamp(46px, 5vw, 69px); line-height: 1.04; letter-spacing: -.058em; font-weight: 700; }
+.hero h1 { margin: 24px 0 18px; font-size: clamp(46px, 5vw, 69px); line-height: 1.04; letter-spacing: -.058em; font-weight: 700; text-shadow: 0 2px 16px rgba(0,0,0,.72), 0 1px 3px rgba(0,0,0,.85); }
 .hero h1 em { color: #6fc9f2; font-style: normal; }
-.hero-content > p { max-width: 620px; margin: 0; color: #d3deec; font-size: 17px; line-height: 1.75; }
+.hero-content > p { max-width: 620px; margin: 0; color: #f1f5f9; font-size: 17px; line-height: 1.75; text-shadow: 0 1px 8px rgba(0,0,0,.7); }
 .hero-buttons { display: flex; gap: 12px; margin-top: 32px; }
 .button-glass { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.38); box-shadow: none; }
 .button-glass:hover { background: rgba(255,255,255,.18); }
@@ -231,12 +231,12 @@ footer { background: #09162d; color: #9baac0; padding-top: 75px; }
 .footer-bottom { border-top: 1px solid #20304a; padding: 19px 0; font-size: 10px; }
 .footer-bottom .shell { display: flex; justify-content: space-between; }
 .page-hero { height: 390px; position: relative; color: white; overflow: hidden; }
-.page-hero > img { width: 100%; height: 100%; object-fit: cover; object-position: center 38%; }
-.page-overlay { position: absolute; inset: 0; background: linear-gradient(90deg,rgba(7,20,44,.92),rgba(13,34,71,.55),rgba(0,0,0,.15)); }
+.page-hero > img { width: 100%; height: 100%; object-fit: cover; object-position: center 38%; filter: brightness(1.04) contrast(1.03); }
+.page-overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(7,20,44,.74) 0%, rgba(13,34,71,.42) 50%, transparent 85%); }
 .page-hero .shell { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
-.breadcrumb { display: flex; align-items: center; gap: 7px; color: #d0dced; font-size: 11px; text-transform: uppercase; letter-spacing: .12em; }
+.breadcrumb { display: flex; align-items: center; gap: 7px; color: #d0dced; font-size: 11px; text-transform: uppercase; letter-spacing: .12em; text-shadow: 0 1px 4px rgba(0,0,0,.6); }
 .breadcrumb a { color: #70ccf4; }
-.page-hero h1 { max-width: 750px; font-size: clamp(37px,5vw,57px); line-height: 1.12; margin: 15px 0 0; }
+.page-hero h1 { max-width: 750px; font-size: clamp(37px,5vw,57px); line-height: 1.12; margin: 15px 0 0; text-shadow: 0 2px 14px rgba(0,0,0,.7); }
 .gallery-section { background: var(--soft); }
 .filters { display: flex; justify-content: center; gap: 5px; margin-bottom: 37px; flex-wrap: wrap; }
 .filters button { border: 1px solid #dce4ee; background: white; color: #5d6e85; padding: 11px 17px; cursor: pointer; font-size: 12px; font-weight: 600; }
@@ -296,13 +296,13 @@ footer { background: #09162d; color: #9baac0; padding-top: 75px; }
   .section { padding: 75px 0; }.utility-right { display: none; }.utility-inner { justify-content: center; }.utility-group { gap: 14px; }
   .nav-actions { display: none; }.header { height: 72px; }.shell { width: min(100% - 28px,1180px); }
   .hero-desktop-slides { display: none; }
-  .hero-mobile-bg { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
-  .hero-overlay { background: linear-gradient(180deg, rgba(8,20,44,.28) 0%, rgba(9,22,48,.62) 42%, rgba(8,20,44,.95) 82%); }
-  .hero { height: auto; min-height: 620px; }
-  .hero-inner { align-items: flex-end; padding-top: 90px; padding-bottom: 40px; }
+  .hero-mobile-bg { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; filter: brightness(1.05) contrast(1.03); }
+  .hero-overlay { background: linear-gradient(180deg, rgba(6,16,37,.04) 0%, rgba(6,16,37,.14) 28%, rgba(8,20,44,.46) 65%, rgba(8,20,44,.80) 100%); }
+  .hero { height: auto; min-height: 600px; }
+  .hero-inner { align-items: flex-end; padding-top: 90px; padding-bottom: 36px; }
   .hero-content { width: 100%; margin-top: 0; }
-  .hero h1 { font-size: 34px; line-height: 1.15; margin: 14px 0 12px; }
-  .hero-content > p { font-size: 14.5px; line-height: 1.6; }
+  .hero h1 { font-size: 34px; line-height: 1.15; margin: 14px 0 12px; text-shadow: 0 2px 14px rgba(0,0,0,.85), 0 1px 4px rgba(0,0,0,.95); }
+  .hero-content > p { font-size: 14.5px; line-height: 1.6; text-shadow: 0 1px 8px rgba(0,0,0,.8); }
   .hero-controls { bottom: 50px; }.quick-wrap { margin-top: 0; width: 100%; }.quick-grid { grid-template-columns: 1fr 1fr; }.quick-grid > a { min-height: 120px; }
   .about-grid, .doctor-grid, .emergency-grid, .appointment-grid, .contact-split { grid-template-columns: 1fr; }.about-grid, .emergency-grid { gap: 50px; }.about-images { max-width: 600px; }.emergency-photo-card img { height: 360px; }
   .stats { grid-template-columns: 1fr 1fr; }.stats div:nth-child(2){border-right:0}.stats div:nth-child(-n+2){border-bottom:1px solid var(--line)}
@@ -315,11 +315,11 @@ footer { background: #09162d; color: #9baac0; padding-top: 75px; }
 }
 @media (max-width: 540px) {
   .utility-group span { display: none; }.utility { font-size: 10px; }.logo-copy b { font-size: 16px; }.logo-img { height: 42px; max-width: 40px; }
-  .hero { height: auto; min-height: 580px; }
-  .hero-inner { padding-top: 70px; padding-bottom: 26px; }
-  .hero-badge { font-size: 9px; padding: 6px 11px; letter-spacing: .12em; }
-  .hero h1 { font-size: 26px; line-height: 1.2; letter-spacing: -.03em; margin: 10px 0 8px; }
-  .hero-content > p { font-size: 13px; line-height: 1.55; color: #e2eaf4; }
+  .hero { height: auto; min-height: 570px; }
+  .hero-inner { padding-top: 60px; padding-bottom: 24px; }
+  .hero-badge { font-size: 9px; padding: 6px 11px; letter-spacing: .12em; background: rgba(8,20,44,.6); }
+  .hero h1 { font-size: 26px; line-height: 1.2; letter-spacing: -.03em; margin: 10px 0 8px; text-shadow: 0 2px 12px rgba(0,0,0,.9), 0 1px 3px rgba(0,0,0,.95); }
+  .hero-content > p { font-size: 13px; line-height: 1.55; color: #ffffff; text-shadow: 0 1px 8px rgba(0,0,0,.9); }
   .hero-buttons { flex-direction: column; align-items: stretch; width: 100%; max-width: 310px; margin-top: 16px; gap: 8px; }
   .hero-buttons .button { min-height: 43px; padding: 0 16px; font-size: 12.5px; }
   .hero-controls { display: none; }.quick-grid { grid-template-columns: 1fr; }.quick-grid > a { min-height: 100px; border-right: 0; }
