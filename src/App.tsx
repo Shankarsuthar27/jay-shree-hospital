@@ -26,10 +26,13 @@ import {
   Phone,
   Pill,
   Quote,
+  Radio,
+  Scan,
   ShieldCheck,
   Stethoscope,
   Syringe,
   Users,
+  Waves,
   X,
 } from 'lucide-react'
 
@@ -331,13 +334,47 @@ const specialties = [
   ],
 ]
 
-const investigations = [
-  { name: 'Pathology & Blood Tests', desc: 'Automated hematology, clinical biochemistry, hormones, and routine microscopy.' },
-  { name: 'Digital X-Ray', desc: 'Instant high-resolution digital radiography for bone, joint, and chest diagnostics.' },
-  { name: '2D Echo, ECG & TMT', desc: 'Precision non-invasive cardiac function assessment and stress tests.' },
-  { name: 'Ultrasound (Sonography)', desc: 'Detailed abdominal, pelvic, vascular, and point-of-care emergency imaging.' },
-  { name: 'Renal & Dialysis Lab', desc: 'Continuous electrolyte, urea, creatinine, and pre/post-dialysis monitoring.' },
-  { name: '24/7 Emergency Pharmacy', desc: 'Complete availability of life-saving, ICU, surgical, and general medicines.' },
+const specialInvestigations = [
+  {
+    icon: Scan,
+    title: 'CT-ANGIOGRAPHY',
+    desc: 'Advanced non-invasive cardiac & peripheral vascular imaging',
+  },
+  {
+    icon: HeartPulse,
+    title: 'ECHO-CARDIOGRAPHY WITH DOPPLER',
+    desc: 'Precision 2D & Color Doppler cardiac functional analysis',
+  },
+  {
+    icon: Waves,
+    title: '4D COLOUR SONOGRAPHY',
+    desc: 'High-definition 4D ultrasound, organ Doppler & anomaly scans',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'KOREAN MODULAR O.T.',
+    desc: 'Ultra-clean zero-infection laminar airflow surgical suites',
+  },
+  {
+    icon: Microscope,
+    title: 'HORMONE / TUMOUR MARKER',
+    desc: 'Comprehensive endocrine assays, thyroid & cancer markers',
+  },
+  {
+    icon: Radio,
+    title: 'PORTABLE BEDSIDE X-RAY',
+    desc: 'Instant digital radiography directly in ICU & emergency beds',
+  },
+  {
+    icon: Activity,
+    title: 'T.M.T. / E.E.G. / HOLTER / N.C.D.',
+    desc: 'Cardiac stress testing, 24-hr Holter & neuro-electrophysiology',
+  },
+  {
+    icon: Droplets,
+    title: 'ADVANCED DIALYSIS & RENAL LAB',
+    desc: 'High-flux hemodialysis unit with continuous renal monitoring',
+  },
 ]
 
 function Specialties() {
@@ -345,7 +382,7 @@ function Specialties() {
     <section className="section specialties" id="specialties">
       <div className="shell">
         <SectionTitle
-          eyebrow="Specialities & Investigations"
+          eyebrow="Specialities"
           title="Specialist expertise. One trusted address."
           text="Coordinated medical services designed around your needs, with diagnosis and treatment under one roof."
           center
@@ -367,29 +404,43 @@ function Specialties() {
             </motion.article>
           ))}
         </div>
+      </div>
+    </section>
+  )
+}
 
-        <div className="investigations-box">
-          <div className="investigations-header">
-            <div className="investigations-title">
-              <span className="investigations-icon"><Microscope size={26} /></span>
-              <div>
-                <h3>Diagnostic & Clinical Investigations</h3>
-                <p>Fully equipped in-house testing facilities for accurate, rapid clinical answers under one roof.</p>
-              </div>
-            </div>
-            <a href="#appointment" className="button button-small">Book An Investigation</a>
-          </div>
-          <div className="investigations-grid">
-            {investigations.map((item) => (
-              <div key={item.name} className="investigation-item">
-                <span className="investigation-check"><Check size={14} /></span>
-                <div>
-                  <b>{item.name}</b>
+function SpecialInvestigations() {
+  return (
+    <section className="section special-investigations" id="investigations">
+      <div className="shell">
+        <SectionTitle
+          eyebrow="Special Investigations & Diagnostics"
+          title="SPECIAL INVESTIGATIONS"
+          text="Advanced diagnostic technologies, high-precision automated imaging, and ultra-sterile surgical infrastructure at JayShree Hospital."
+          center
+        />
+        <div className="investigations-card-grid">
+          {specialInvestigations.map((item, idx) => {
+            const Icon = item.icon
+            return (
+              <motion.div
+                key={item.title}
+                className="investigation-card"
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.05 }}
+              >
+                <div className="investigation-card-icon">
+                  <Icon size={34} />
+                </div>
+                <div className="investigation-card-body">
+                  <h3>{item.title}</h3>
                   <p>{item.desc}</p>
                 </div>
-              </div>
-            ))}
-          </div>
+              </motion.div>
+            )
+          })}
         </div>
       </div>
     </section>
@@ -656,6 +707,7 @@ function HomePage() {
         <QuickActions />
         <About />
         <Specialties />
+        <SpecialInvestigations />
         <Doctor />
         <EmergencySection />
         <WhyUs />
