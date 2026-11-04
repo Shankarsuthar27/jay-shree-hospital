@@ -673,17 +673,14 @@ function OtherDoctors() {
   }
 
   return (
-    <section className="other-doctors-section" id="doctors-panel">
+    <section className="section other-doctors-section" id="doctors-panel">
       <div className="shell">
-        <div className="doc-section-header">
-          <div className="doc-eyebrow">
-            <Activity size={18} className="doc-pulse-icon" />
-            <span>MEDICAL EXPERTS</span>
-          </div>
-          <h2 className="doc-section-title">
-            Our Doctors
-          </h2>
-        </div>
+        <SectionTitle
+          eyebrow="MEDICAL EXPERTS"
+          title="Our Doctors"
+          text="Senior consultant surgeons and visiting physicians delivering ethical, specialist-led healthcare across core clinical departments."
+          center
+        />
 
         <div className="doc-carousel-wrap">
           {/* Navigation Arrows */}
@@ -739,10 +736,10 @@ function OtherDoctors() {
                       </div>
                       <button
                         type="button"
-                        className="doc-view-profile-btn"
+                        className="button button-small doc-view-profile-btn"
                         onClick={() => setSelectedDoctor(doc)}
                       >
-                        View Profile
+                        View Profile <ArrowRight size={14} />
                       </button>
                     </div>
 
@@ -754,12 +751,16 @@ function OtherDoctors() {
                       </div>
 
                       <div className="doc-dept-badge">
+                        <Stethoscope size={13} />
                         <span>{doc.department}</span>
                       </div>
 
-                      <div className="doc-status-indicator">
-                        <span className="doc-live-dot" />
-                        <span>{doc.timing}</span>
+                      <div className="doc-timing-box">
+                        <Clock3 size={15} />
+                        <span>
+                          <b>OPD Schedule</b>
+                          <small>{doc.timing}</small>
+                        </span>
                       </div>
                     </div>
                   </div>
