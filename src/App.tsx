@@ -1008,71 +1008,89 @@ function OtherDoctors() {
   )
 }
 
-interface FacilityItem {
+interface FacilityCardItem {
   id: string
+  category: string
   title: string
-  eyebrow: string
   image: string
-  description: string
-  features: string[]
-  badge: string
 }
 
-const hospitalFacilities: FacilityItem[] = [
+const campusHighlights: FacilityCardItem[] = [
   {
-    id: 'emergency-wing',
-    eyebrow: 'IMMEDIATE TRIAGE & STABILIZATION',
-    title: '24/7 Emergency & Trauma Center',
-    image: '/images/facility-emergency-wing.jpg',
-    description: 'Direct ground-floor emergency wing designed for zero-delay triage, immediate resuscitation, and seamless corridor access to ICU, CT Scan, X-Ray, Sonography, and 24/7 Pathology.',
-    features: ['Rapid Triage & Resuscitation', 'Connected Diagnostic Corridor', '24/7 Trauma Medical Team'],
-    badge: 'Emergency Care Wing',
+    id: 'facade',
+    category: 'EXTERIOR',
+    title: 'JayShree Hospital modern exterior facade',
+    image: '/images/main1.jpg',
   },
   {
     id: 'modular-ot',
-    eyebrow: 'SURGICAL EXCELLENCE',
-    title: 'Korean Modular Operation Theater',
+    category: 'FACILITIES',
+    title: 'Korean Modular Operation Theater with C-Arm',
     image: '/images/facility-modular-ot.jpg',
-    description: 'Ultra-clean sterile surgical suite equipped with advanced C-Arm fluoroscopy, precision anesthesia workstation, and laminar airflow to prevent surgical infections.',
-    features: ['Sterile Laminar Airflow', 'C-Arm Fluoroscopy Guidance', 'Precision Anesthesia Workstation'],
-    badge: 'Modular Surgical Suite',
-  },
-  {
-    id: 'icu-ventilator',
-    eyebrow: 'CRITICAL CARE & LIFE SUPPORT',
-    title: 'Advanced ICU & Ventilator Unit',
-    image: '/images/facility-icu-ventilator.jpg',
-    description: 'High-dependency intensive care station with state-of-the-art mechanical ventilators, continuous multi-parameter cardiac monitoring, and dedicated central medical gas lines.',
-    features: ['Mechanical Ventilators', 'Multipara Cardiac Monitors', 'Central Medical Gas Lines'],
-    badge: 'Life-Support ICU',
   },
   {
     id: 'icu-beds',
-    eyebrow: 'PATIENT CARE & RECOVERY',
-    title: 'Monitored Inpatient Recovery Wards',
+    category: 'FACILITIES',
+    title: 'Intensive Care Unit (ICU) & multi-para monitors',
     image: '/images/facility-icu-beds.jpg',
-    description: 'Modern inpatient recovery rooms featuring motorized adjustable hospital beds, individualized bedside vitals consoles, nurse call systems, and continuous clinical oversight.',
-    features: ['Motorized Adjustable Beds', 'Bedside Vitals Consoles', '24/7 Dedicated Nursing Care'],
-    badge: 'Inpatient Recovery Wards',
+  },
+  {
+    id: 'reception-desk',
+    category: 'RECEPTION',
+    title: '24/7 Patient help desk & registration counter',
+    image: '/images/reception-desk.jpg',
+  },
+  {
+    id: 'specialties-lounge',
+    category: 'RECEPTION',
+    title: 'Illuminated specialties wall & patient lounge',
+    image: '/images/specialties-lounge.jpg',
+  },
+]
+
+const clinicalFacilities: FacilityCardItem[] = [
+  {
+    id: 'emergency-wing',
+    category: 'EMERGENCY',
+    title: '24/7 Emergency & trauma center with direct diagnostic access',
+    image: '/images/facility-emergency-wing.jpg',
+  },
+  {
+    id: 'modular-ot-sterile',
+    category: 'SURGERY',
+    title: 'Korean Modular Operation Theater with C-Arm & laminar airflow',
+    image: '/images/facility-modular-ot.jpg',
+  },
+  {
+    id: 'icu-monitors',
+    category: 'CRITICAL CARE',
+    title: 'Level-III Intensive Care Unit (ICU) & multi-para monitors',
+    image: '/images/facility-icu-beds.jpg',
   },
   {
     id: 'maternity-suite',
-    eyebrow: 'WOMEN & CHILD HEALTH',
-    title: 'Maternity, Labor & Neonatal Suite',
+    category: 'MATERNITY',
+    title: 'Maternity, Labor & Neonatal Care Suite with specialized monitoring',
     image: '/images/facility-maternity-suite.jpg',
-    description: 'Specialized labor and delivery room equipped with dedicated birthing table, continuous fetal monitoring, infant resuscitation setup, and neonatal care equipment.',
-    features: ['Specialized Labor Table', 'Fetal Heart Monitoring', 'Radiant Infant Care Station'],
-    badge: 'Maternity & Labor Suite',
+  },
+  {
+    id: 'icu-ventilators',
+    category: 'LIFE SUPPORT',
+    title: 'Advanced ICU Ventilators & central medical gas supply',
+    image: '/images/facility-icu-ventilator.jpg',
   },
 ]
 
 function FacilitiesSection() {
+  const [activeTab, setActiveTab] = useState<'campus' | 'clinical'>('campus')
   const [activeLightbox, setActiveLightbox] = useState<number | null>(null)
+
+  const activeItems = activeTab === 'campus' ? campusHighlights : clinicalFacilities
 
   const move = (delta: number) => {
     setActiveLightbox((prev) => {
       if (prev === null) return null
-      return (prev + delta + hospitalFacilities.length) % hospitalFacilities.length
+      return (prev + delta + activeItems.length) % activeItems.length
     })
   }
 
@@ -1085,57 +1103,70 @@ function FacilitiesSection() {
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [activeLightbox])
+  }, [activeLightbox, activeItems.length])
 
   return (
     <section className="section facilities-section" id="facilities">
       <div className="shell">
         <SectionTitle
-          eyebrow="CLINICAL INFRASTRUCTURE"
-          title="World-Class Medical Facilities"
-          text="Explore real photographs of our modern medical infrastructure in Jalore — featuring our Korean modular operation theater, life-support ICU unit, 24/7 emergency center, and maternity suite."
+          eyebrow="CAMPUS & INFRASTRUCTURE"
+          title="Inside JayShree Hospital"
+          text="Explore real photographs of our modern hospital building, Korean modular operation theater, 24/7 ICU, patient recovery rooms, and welcoming reception lobby."
           center
         />
 
-        <div className="facilities-grid">
-          {hospitalFacilities.map((fac, idx) => (
+        <div className="facilities-tabs">
+          <button
+            type="button"
+            className={`facilities-tab-btn ${activeTab === 'campus' ? 'active' : ''}`}
+            onClick={() => {
+              setActiveTab('campus')
+              setActiveLightbox(null)
+            }}
+          >
+            Campus Highlights
+          </button>
+          <button
+            type="button"
+            className={`facilities-tab-btn ${activeTab === 'clinical' ? 'active' : ''}`}
+            onClick={() => {
+              setActiveTab('clinical')
+              setActiveLightbox(null)
+            }}
+          >
+            Clinical Infrastructure
+          </button>
+        </div>
+
+        <motion.div
+          key={activeTab}
+          className="facilities-grid"
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35 }}
+        >
+          {activeItems.map((item, idx) => (
             <motion.article
-              key={fac.id}
+              key={item.id}
               className={`facility-card ${idx < 2 ? 'facility-card-featured' : 'facility-card-standard'}`}
-              initial={{ opacity: 0, y: 22 }}
+              initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.5, delay: idx * 0.08 }}
+              viewport={{ once: true, margin: '-30px' }}
+              transition={{ duration: 0.45, delay: idx * 0.07 }}
               onClick={() => setActiveLightbox(idx)}
-              aria-label={`View ${fac.title}`}
+              aria-label={`View ${item.title}`}
             >
-              <div className="facility-image-wrap">
-                <img src={fac.image} alt={fac.title} loading="lazy" />
-                <span className="facility-badge">{fac.badge}</span>
-                <span className="facility-zoom-btn" title="Expand Photo">
-                  <ZoomIn size={17} />
-                </span>
+              <img src={item.image} alt={item.title} loading="lazy" />
+              <div className="facility-card-overlay">
+                <span className="facility-card-category">{item.category}</span>
+                <h3 className="facility-card-title">{item.title}</h3>
               </div>
-
-              <div className="facility-content">
-                <div>
-                  <span className="facility-eyebrow">{fac.eyebrow}</span>
-                  <h3 className="facility-title">{fac.title}</h3>
-                  <p className="facility-desc">{fac.description}</p>
-                </div>
-
-                <ul className="facility-pills">
-                  {fac.features.map((feat) => (
-                    <li key={feat} className="facility-pill">
-                      <Check size={13} strokeWidth={2.4} />
-                      <span>{feat}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <span className="facility-zoom-pill">
+                <ZoomIn size={13} /> View
+              </span>
             </motion.article>
           ))}
-        </div>
+        </motion.div>
 
         <div className="facilities-footer">
           <p>
@@ -1149,7 +1180,7 @@ function FacilitiesSection() {
       </div>
 
       <AnimatePresence>
-        {activeLightbox !== null && hospitalFacilities[activeLightbox] && (
+        {activeLightbox !== null && activeItems[activeLightbox] && (
           <motion.div
             className="lightbox"
             initial={{ opacity: 0 }}
@@ -1175,25 +1206,25 @@ function FacilitiesSection() {
               <ArrowLeft />
             </button>
             <motion.figure
-              key={hospitalFacilities[activeLightbox].id}
+              key={activeItems[activeLightbox].id}
               initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.96 }}
               onClick={(e) => e.stopPropagation()}
             >
               <img
-                src={hospitalFacilities[activeLightbox].image}
-                alt={hospitalFacilities[activeLightbox].title}
+                src={activeItems[activeLightbox].image}
+                alt={activeItems[activeLightbox].title}
               />
               <figcaption>
                 <div className="lightbox-caption-text">
                   <span className="lightbox-cat-tag">
-                    {hospitalFacilities[activeLightbox].badge}
+                    {activeItems[activeLightbox].category}
                   </span>
-                  <b>{hospitalFacilities[activeLightbox].title}</b>
+                  <b>{activeItems[activeLightbox].title}</b>
                 </div>
                 <small>
-                  {activeLightbox + 1} / {hospitalFacilities.length}
+                  {activeLightbox + 1} / {activeItems.length}
                 </small>
               </figcaption>
             </motion.figure>
