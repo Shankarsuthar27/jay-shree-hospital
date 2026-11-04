@@ -1643,9 +1643,9 @@ function HomePage() {
         <QuickActions />
         <About />
         <Specialties />
-        <SpecialInvestigations />
         <Doctor />
         <OtherDoctors />
+        <SpecialInvestigations />
         <FacilitiesSection />
         <EmergencySection />
         <WhyUs />
