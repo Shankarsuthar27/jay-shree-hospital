@@ -45,3 +45,4 @@ Options -Indexes
   ExpiresByType image/svg+xml "access plus 1 year"
   ExpiresByType font/woff2 "access plus 1 year"
 </IfModule>
+
