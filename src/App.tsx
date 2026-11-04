@@ -528,11 +528,8 @@ function Doctor() {
 interface OtherDoctor {
   id: string
   nameEn: string
-  nameHi: string
-  degreeHi: string
-  degreeEn: string
+  degree: string
   department: string
-  departmentHi: string
   image: string
   timing: string
   bio: string
@@ -542,11 +539,8 @@ const otherDoctors: OtherDoctor[] = [
   {
     id: 'dr-gupta',
     nameEn: 'DR. RAJENDRA KUMAR GUPTA',
-    nameHi: '',
-    degreeHi: 'एम.एस. कन्सल्टींग सर्जन',
-    degreeEn: 'M.S. Consulting Surgeon',
+    degree: 'M.S. Consulting Surgeon',
     department: 'General & Laparoscopic Surgery',
-    departmentHi: 'जनरल एवं लेप्रोस्कोपिक सर्जरी',
     image: '',
     timing: 'Visiting Consultant · Scheduled OPD & Emergency Surgery',
     bio: 'Senior Consulting Surgeon with comprehensive expertise in advanced laparoscopic procedures, abdominal and gastrointestinal surgeries, trauma management, and emergency surgical care for Jalore.',
@@ -554,11 +548,8 @@ const otherDoctors: OtherDoctor[] = [
   {
     id: 'dr-sharma',
     nameEn: 'DR. SATYA PRAKASH SHARMA',
-    nameHi: '',
-    degreeHi: 'M.D. (पैथोलोजी)',
-    degreeEn: 'M.D. (Pathology)',
+    degree: 'M.D. (Pathology)',
     department: 'Clinical Pathology & Laboratory Medicine',
-    departmentHi: 'पैथोलोजी एवं क्लिनिकल लैब',
     image: '',
     timing: 'Senior Pathologist · Daily Laboratory Diagnostics',
     bio: 'Leading Consultant Pathologist directing diagnostic clinical pathology, histopathology, cytology, automated hematology, and biochemical assays to ensure rapid and accurate laboratory results.',
@@ -566,11 +557,8 @@ const otherDoctors: OtherDoctor[] = [
   {
     id: 'dr-bajaj',
     nameEn: 'DR. RAJENDRA KUMAR BAJAJ',
-    nameHi: '',
-    degreeHi: 'MBBS, M.D. बच्चों के डॉक्टर (गोल्ड मेडलिस्ट)',
-    degreeEn: "MBBS, M.D. Children's Doctor (Gold Medalist)",
+    degree: "MBBS, M.D. (Pediatrics) · Gold Medalist",
     department: 'Pediatrics & Neonatology',
-    departmentHi: 'शिशु एवं बाल रोग विभाग',
     image: '',
     timing: 'Gold Medalist Pediatrician · Child & Newborn OPD',
     bio: 'Renowned Gold Medalist Pediatrician providing specialized care for infants, children, and adolescents, including immunization, developmental health monitoring, pediatric infections, and neonatal care.',
@@ -578,11 +566,8 @@ const otherDoctors: OtherDoctor[] = [
   {
     id: 'dr-sarika',
     nameEn: 'DR. SARIKA CHOPRA',
-    nameHi: '',
-    degreeHi: 'स्त्री एवं प्रसुति रोग व निःसंतान रोग विशेषज्ञ',
-    degreeEn: 'Obstetrics, Gynecology & Infertility Specialist',
+    degree: 'Obstetrics, Gynecology & Infertility Specialist',
     department: 'Obstetrics & Gynecology',
-    departmentHi: 'स्त्री एवं प्रसूति रोग विभाग',
     image: '',
     timing: 'Women & Maternity Specialist · Dedicated OPD',
     bio: "Experienced Obstetrician, Gynecologist, and Infertility Specialist dedicated to comprehensive women's health, high-risk pregnancy care, painless deliveries, reproductive wellness, and fertility guidance.",
@@ -590,11 +575,8 @@ const otherDoctors: OtherDoctor[] = [
   {
     id: 'dr-vikas',
     nameEn: 'DR. VIKAS KUMAR',
-    nameHi: '',
-    degreeHi: 'हड्डी रोग एवं जोड़ प्रत्यारोपण विशेषज्ञ',
-    degreeEn: 'Orthopedic & Joint Replacement Specialist',
+    degree: 'Orthopedic & Joint Replacement Specialist',
     department: 'Orthopedics & Joint Replacement',
-    departmentHi: 'हड्डी एवं जोड़ प्रत्यारोपण विभाग',
     image: '',
     timing: 'Orthopedic Surgeon · Trauma & Joint Clinic',
     bio: 'Senior Orthopedic Surgeon specializing in total knee and hip replacement (arthroplasty), complex trauma fracture care, arthroscopic ligament reconstruction, arthritis treatment, and spine therapy.',
@@ -602,11 +584,8 @@ const otherDoctors: OtherDoctor[] = [
   {
     id: 'dr-satish',
     nameEn: 'DR. SATISH SHAH',
-    nameHi: '',
-    degreeHi: 'D.M.R.E. (रेडियोलोजिस्ट)',
-    degreeEn: 'D.M.R.E. (Radiologist)',
+    degree: 'D.M.R.E. (Radiologist)',
     department: 'Radiology & Medical Imaging',
-    departmentHi: 'रेडियोलोजी एवं सोनोग्राफी विभाग',
     image: '',
     timing: 'Senior Radiologist · Ultrasonography & Imaging',
     bio: 'Consultant Radiologist with extensive experience in 4D colour Doppler sonography, CT-Angiography review, bedside digital X-ray evaluation, and precision radiological diagnoses for complex cases.',
@@ -731,7 +710,7 @@ function OtherDoctors() {
                         {doc.image ? (
                           <img
                             src={doc.image}
-                            alt={`${doc.nameEn} - ${doc.degreeEn}`}
+                            alt={`${doc.nameEn} - ${doc.degree}`}
                             loading="lazy"
                           />
                         ) : (
@@ -752,8 +731,7 @@ function OtherDoctors() {
                     <div className="doc-info-col">
                       <div className="doc-degree-block">
                         <span className="doc-degree-label">Degree:</span>
-                        <p className="doc-degree-value">{doc.degreeHi}</p>
-                        <p className="doc-degree-sub">{doc.degreeEn}</p>
+                        <p className="doc-degree-value">{doc.degree}</p>
                       </div>
 
                       <div className="doc-dept-badge">
@@ -840,8 +818,7 @@ function OtherDoctors() {
                   <div className="doc-modal-details">
                     <div className="doc-modal-item">
                       <b className="doc-modal-label">Specialist Qualifications & Degree</b>
-                      <p className="doc-modal-degree-hi">{selectedDoctor.degreeHi}</p>
-                      <p className="doc-modal-degree-en">{selectedDoctor.degreeEn}</p>
+                      <p className="doc-modal-degree">{selectedDoctor.degree}</p>
                     </div>
 
                     <div className="doc-modal-item">
@@ -856,7 +833,7 @@ function OtherDoctors() {
                       <b className="doc-modal-label">Department / Specialty</b>
                       <p className="doc-modal-dept">
                         <Stethoscope size={15} />
-                        <span>{selectedDoctor.department} ({selectedDoctor.departmentHi})</span>
+                        <span>{selectedDoctor.department}</span>
                       </p>
                     </div>
                   </div>

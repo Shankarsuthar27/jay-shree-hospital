@@ -655,17 +655,11 @@ footer { background: #09162d; color: #9baac0; padding-top: 75px; }
   letter-spacing: .08em;
   margin-bottom: 3px;
 }
-.doc-modal-degree-hi {
+.doc-modal-degree {
   margin: 0;
   font-size: 14px;
   font-weight: 700;
   color: var(--blue-dark);
-}
-.doc-modal-degree-en {
-  margin: 2px 0 0;
-  font-size: 12.5px;
-  color: var(--cyan);
-  font-weight: 700;
 }
 .doc-modal-timing,
 .doc-modal-dept {
