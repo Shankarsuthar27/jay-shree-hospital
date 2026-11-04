@@ -142,6 +142,7 @@ function SectionTitle({ eyebrow, title, text, center = false }: { eyebrow: strin
 const heroSlides = [
   {
     image: '/images/main1.jpg',
+    mobileImage: '/images/hero-mobile.jpg',
     badge: 'Welcome to JayShree Hospital, Jalore',
     title: (
       <>
@@ -149,32 +150,68 @@ const heroSlides = [
         <em>Genuine compassion.</em>
       </>
     ),
-    text: 'Your Health, Our Commitment — state-of-the-art multispecialty care, advanced diagnostics, and 24/7 emergency support under expert guidance.',
+    text: 'Your Health, Our Commitment — state-of-the-art multispecialty care, advanced diagnostics, and 24/7 emergency support in Shivaji Nagar Colony, Jalore.',
     primaryBtn: { text: 'Book An Appointment', href: '#appointment', isEmergency: false },
   },
   {
+    image: '/images/icu.jpg',
+    badge: 'Advanced ICU & Critical Care Unit',
+    title: (
+      <>
+        Critical care ready.<br />
+        <em>24/7 Life-support ICU.</em>
+      </>
+    ),
+    text: 'Modern intensive care unit with multi-parameter cardiac monitors, ventilators, central oxygen, and continuous critical medicine supervision under Dr. Hemant Jain.',
+    primaryBtn: { text: 'Emergency Services', href: '#emergency', isEmergency: true },
+  },
+  {
+    image: '/images/specialties-lounge.jpg',
+    badge: 'Cardiology, Neurology, Urology & More',
+    title: (
+      <>
+        Specialist expertise.<br />
+        <em>Under one trusted roof.</em>
+      </>
+    ),
+    text: 'Dedicated departments for Critical Medicine, Cardiology, Neurology, Urology, Orthopedics, General Surgery, Nephrology, and Dialysis in Jalore.',
+    primaryBtn: { text: 'Explore Specialties', href: '#specialties', isEmergency: false },
+  },
+  {
+    image: '/images/reception-lobby.jpg',
+    badge: 'Patient First Reception & Help Desk',
+    title: (
+      <>
+        Your health.<br />
+        <em>Our personal commitment.</em>
+      </>
+    ),
+    text: 'Welcoming lobby with 24/7 patient help desk, government health scheme facilitation (Ayushman Bharat, Maa Yojana), and immediate OPD registration.',
+    primaryBtn: { text: 'Consult Dr. Hemant Jain', href: '#doctor', isEmergency: false },
+  },
+  {
+    image: '/images/opd-hall.jpg',
+    badge: 'Modern Outpatient Department (OPD)',
+    title: (
+      <>
+        Comfortable care.<br />
+        <em>Dedicated OPD cabins.</em>
+      </>
+    ),
+    text: 'Air-conditioned consultation chambers and comfortable patient waiting area for hassle-free consultations with Dr. Hemant Jain and specialist consultants.',
+    primaryBtn: { text: 'Book OPD Visit', href: '#appointment', isEmergency: false },
+  },
+  {
     image: '/images/entrance.jpg',
-    badge: 'Hospital Entrance & On-Site Medical Store',
+    badge: 'Hospital Entrance & 24/7 Medical Store',
     title: (
       <>
         Modern campus.<br />
         <em>Always open for your family.</em>
       </>
     ),
-    text: 'Welcoming hospital entrance, on-site 24/7 pharmacy (Om Shanti Gurudev Medical Store), and immediate outpatient care in Shivaji Nagar Colony, Jalore.',
+    text: 'Convenient ground-level entrance with ramp access, wheel-chair assistance, and 24/7 on-site pharmacy (Om Shanti Gurudev Medical Store).',
     primaryBtn: { text: 'Discover Hospital Facilities', href: '#about', isEmergency: false },
-  },
-  {
-    image: '/images/main2.jpg',
-    badge: 'Modern Multispeciality Infrastructure',
-    title: (
-      <>
-        Comprehensive care.<br />
-        <em>One trusted destination.</em>
-      </>
-    ),
-    text: 'Experienced consultants, modular surgical facilities, in-house pathology, and patient-centered healing in the heart of Jalore.',
-    primaryBtn: { text: 'Our Specialties', href: '#specialties', isEmergency: false },
   },
   {
     image: '/images/ambulance.jpg',
@@ -202,28 +239,27 @@ function Hero() {
 
   return (
     <section className="hero">
-      {/* Mobile hero image: dedicated vertical building facade view */}
-      <img
-        src="/images/hero-mobile.jpg"
-        alt="JayShree Hospital building facade"
-        className="hero-mobile-bg"
-      />
-
-      {/* Desktop hero slideshow */}
-      <div className="hero-desktop-slides">
-        <AnimatePresence mode="popLayout">
-          <motion.img
-            key={current.image}
-            src={current.image}
-            alt={current.badge}
-            className="hero-desktop-img"
-            initial={{ opacity: 0, scale: 1.04 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.1 }}
-          />
-        </AnimatePresence>
-      </div>
+      <AnimatePresence mode="popLayout">
+        <motion.div
+          key={current.image}
+          className="hero-media-wrap"
+          initial={{ opacity: 0, scale: 1.03 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.1 }}
+        >
+          <picture className="hero-picture">
+            {current.mobileImage && (
+              <source media="(max-width: 768px)" srcSet={current.mobileImage} />
+            )}
+            <img
+              src={current.image}
+              alt={current.badge}
+              className="hero-bg-img"
+            />
+          </picture>
+        </motion.div>
+      </AnimatePresence>
       <div className="hero-overlay" />
       <div className="shell hero-inner">
         <motion.div
@@ -666,9 +702,14 @@ function PageHero({ title, crumb, image }: { title: string; crumb: string; image
 const galleryImages = [
   ['/images/main1.jpg', 'JayShree Hospital modern exterior facade', 'Exterior'],
   ['/images/hero-mobile.jpg', 'JayShree Hospital full building architecture & signage', 'Exterior'],
+  ['/images/icu.jpg', 'State-of-the-art Intensive Care Unit (ICU) & multi-para monitors', 'Facilities'],
+  ['/images/specialties-lounge.jpg', 'Illuminated specialties wall & comfortable patient waiting lounge', 'Facilities'],
+  ['/images/reception-lobby.jpg', 'Spacious hospital reception lobby & elevator access', 'Reception'],
+  ['/images/reception-desk.jpg', '24/7 Patient help desk and registration counter', 'Reception'],
+  ['/images/opd-hall.jpg', 'Modern outpatient department (OPD) consultation cabins', 'Facilities'],
   ['/images/entrance.jpg', 'Hospital main entrance & 24/7 medical store', 'Exterior'],
-  ['/images/main2.jpg', 'Hospital entrance and patient access', 'Exterior'],
   ['/images/ambulance.jpg', '24/7 JayShree Hospital Emergency Ambulance Unit', 'Exterior'],
+  ['/images/main2.jpg', 'Hospital entrance and patient access', 'Exterior'],
   ['/images/DSCF0537.jpg', 'Contemporary hospital architecture', 'Exterior'],
   ['/images/DSCF0538.jpg', 'JayShree Hospital building elevation', 'Exterior'],
   ['/images/DSCF0539.jpg', 'Main entrance and ground floor facilities', 'Exterior'],
@@ -685,7 +726,7 @@ function GalleryPage() {
     <><Header /><main><PageHero image="/images/main1.jpg" crumb="Gallery" title="Inside JayShree Hospital — Infrastructure & Moments" />
       <section className="section gallery-section"><div className="shell">
         <SectionTitle eyebrow="Photo Gallery" title="Spaces created for care." text="Explore our modern hospital, welcoming patient areas, and the people behind JayShree Hospital." center />
-        <div className="filters">{[['All','All Photos'],['Exterior','Hospital Building & Exterior'],['Reception','Reception & Branding'],['Leadership','Leadership']].map(([v,l])=><button className={filter===v?'active':''} onClick={()=>setFilter(v)} key={v}>{l}</button>)}</div>
+        <div className="filters">{[['All','All Photos'],['Exterior','Hospital Building & Exterior'],['Facilities','ICU & Clinical Facilities'],['Reception','Reception & Lobby'],['Leadership','Leadership']].map(([v,l])=><button className={filter===v?'active':''} onClick={()=>setFilter(v)} key={v}>{l}</button>)}</div>
         <motion.div layout className="gallery-grid">{visible.map((img,i)=><motion.button layout key={img[0]} onClick={()=>setActive(i)} className={i===0?'wide':''}><img src={img[0]} alt={img[1]} /><span><small>{img[2]}</small><b>{img[1]}</b></span><i><ArrowUpRight /></i></motion.button>)}</motion.div>
       </div></section>
       <AnimatePresence>{active!==null&&<motion.div className="lightbox" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} onClick={()=>setActive(null)}><button className="lightbox-close" onClick={()=>setActive(null)}><X /></button><button className="lightbox-prev" onClick={(e)=>{e.stopPropagation();move(-1)}}><ArrowLeft /></button><motion.figure key={visible[active][0]} initial={{opacity:0,scale:.96}} animate={{opacity:1,scale:1}} onClick={e=>e.stopPropagation()}><img src={visible[active][0]} alt={visible[active][1]} /><figcaption>{visible[active][1]}<small>{active+1} / {visible.length}</small></figcaption></motion.figure><button className="lightbox-next" onClick={(e)=>{e.stopPropagation();move(1)}}><ArrowRight /></button></motion.div>}</AnimatePresence>
