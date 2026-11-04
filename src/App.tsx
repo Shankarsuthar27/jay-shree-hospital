@@ -721,7 +721,6 @@ function OtherDoctors() {
                   {/* Top Navy Header Bar */}
                   <div className="doc-card-header">
                     <h3 className="doc-card-name">{doc.nameEn}</h3>
-                    <span className="doc-card-subname">{doc.nameHi}</span>
                   </div>
 
                   {/* Card Body */}
@@ -806,7 +805,6 @@ function OtherDoctors() {
                 <div>
                   <span className="doc-modal-eyebrow">{selectedDoctor.department}</span>
                   <h3>{selectedDoctor.nameEn}</h3>
-                  <span className="doc-modal-hindi">{selectedDoctor.nameHi}</span>
                 </div>
                 <button
                   type="button"
