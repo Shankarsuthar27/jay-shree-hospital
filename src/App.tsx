@@ -1657,9 +1657,140 @@ function HomePage() {
   )
 }
 
+function getNormalizedPath(): string {
+  // Support hash-based fallback (e.g. #/gallery, #/contact, #gallery, #contact)
+  const hash = window.location.hash
+  if (hash.startsWith('#/')) {
+    const raw = hash.slice(1).replace(/\/$/, '') || '/'
+    if (raw === '/gallery' || raw === '/contact') return raw
+  }
+  if (hash === '#gallery') return '/gallery'
+  if (hash === '#contact') return '/contact'
+
+  // Standard pathname
+  let p = window.location.pathname.replace(/\/$/, '') || '/'
+  p = p.replace(/\/index\.html$/, '') || '/'
+  return p
+}
+
+export function navigateTo(to: string) {
+  if (!to) return
+  if (
+    to.startsWith('http://') ||
+    to.startsWith('https://') ||
+    to.startsWith('tel:') ||
+    to.startsWith('mailto:')
+  ) {
+    window.location.href = to
+    return
+  }
+
+  // Hash anchor on the same page (e.g. /#about or #about)
+  if (to.startsWith('#') || to.startsWith('/#')) {
+    const hashTarget = to.replace(/^\/?#/, '')
+    const current = getNormalizedPath()
+    if (current === '/') {
+      const el = document.getElementById(hashTarget)
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' })
+        window.history.pushState(null, '', `/#${hashTarget}`)
+        return
+      }
+    }
+  }
+
+  window.history.pushState(null, '', to)
+  window.dispatchEvent(new PopStateEvent('popstate'))
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
 export default function App() {
-  const path = window.location.pathname.replace(/\/$/, '') || '/'
-  useEffect(() => { window.scrollTo(0, 0) }, [path])
+  const [path, setPath] = useState(getNormalizedPath)
+
+  useEffect(() => {
+    const handlePopState = () => {
+      setPath(getNormalizedPath())
+    }
+
+    const handleGlobalClick = (e: MouseEvent) => {
+      // Ignore if not primary left click or if modifier keys held
+      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
+
+      const anchor = (e.target as HTMLElement).closest('a')
+      if (!anchor) return
+
+      const href = anchor.getAttribute('href')
+      if (!href) return
+
+      // Don't intercept target="_blank", mailto:, tel:, or absolute external URLs
+      if (
+        anchor.target === '_blank' ||
+        href.startsWith('http://') ||
+        href.startsWith('https://') ||
+        href.startsWith('mailto:') ||
+        href.startsWith('tel:') ||
+        href.startsWith('//')
+      ) {
+        return
+      }
+
+      // Check if it's an internal route link (/gallery, /contact, /, /#...)
+      if (href.startsWith('/') || href.startsWith('#')) {
+        e.preventDefault()
+
+        // Handle section scroll on home page
+        if (href.startsWith('#') || href.startsWith('/#')) {
+          const hashTarget = href.replace(/^\/?#/, '')
+          const current = getNormalizedPath()
+          if (current === '/') {
+            const el = document.getElementById(hashTarget)
+            if (el) {
+              el.scrollIntoView({ behavior: 'smooth' })
+              window.history.pushState(null, '', href)
+              return
+            }
+          }
+        }
+
+        window.history.pushState(null, '', href)
+        setPath(getNormalizedPath())
+
+        // Scroll to target hash or top
+        const targetHash = href.includes('#') ? href.split('#')[1] : null
+        if (targetHash) {
+          setTimeout(() => {
+            const el = document.getElementById(targetHash)
+            if (el) el.scrollIntoView({ behavior: 'smooth' })
+            else window.scrollTo({ top: 0, behavior: 'smooth' })
+          }, 80)
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' })
+        }
+      }
+    }
+
+    window.addEventListener('popstate', handlePopState)
+    window.addEventListener('click', handleGlobalClick)
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState)
+      window.removeEventListener('click', handleGlobalClick)
+    }
+  }, [])
+
+  useEffect(() => {
+    // Scroll to section if initial load or refresh has hash
+    if (window.location.hash && !window.location.hash.startsWith('#/')) {
+      const id = window.location.hash.replace(/^#\/?/, '')
+      setTimeout(() => {
+        const el = document.getElementById(id)
+        if (el) el.scrollIntoView({ behavior: 'smooth' })
+      }, 100)
+    } else {
+      window.scrollTo(0, 0)
+    }
+  }, [path])
+
   if (path === '/gallery') return <GalleryPage />
   if (path === '/contact') return <ContactPage />
   return <HomePage />

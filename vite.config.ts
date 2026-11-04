@@ -6,6 +6,28 @@ import path from 'node:path'
 
 import siteConfiguration from './.figma/make/site.json'
 
+function spaFallbackRoutes(): Plugin {
+  return {
+    name: 'spa-fallback-routes',
+    closeBundle() {
+      const distDir = path.resolve(__dirname, 'dist')
+      const indexPath = path.join(distDir, 'index.html')
+      if (!fs.existsSync(indexPath)) return
+
+      const html = fs.readFileSync(indexPath, 'utf-8')
+      const routes = ['gallery', 'contact']
+      for (const route of routes) {
+        const routeDir = path.join(distDir, route)
+        if (!fs.existsSync(routeDir)) {
+          fs.mkdirSync(routeDir, { recursive: true })
+        }
+        fs.writeFileSync(path.join(routeDir, 'index.html'), html)
+      }
+      // Also copy to 404.html for web servers using custom 404 fallback
+      fs.writeFileSync(path.join(distDir, '404.html'), html)
+    },
+  }
+}
 
 // Vite config — https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -19,13 +41,14 @@ export default defineConfig(({ mode }) => {
       minify: !emitSourcemaps,
     },
     plugins: [
-react(),
+      react(),
       tailwindcss(),
       figmaSiteConfiguration(siteConfiguration),
       figmaErrorOverlayReplay(),
       figmaReactRefreshBoundaryFallback(),
       figmaMakeKitPlugin({ storiesGlob: '/src/**/*.stories.{ts,tsx,js,jsx}' }),
       figmaLinkedPackageSourcemaps(),
+      spaFallbackRoutes(),
     ],
     resolve: {
       alias: {
