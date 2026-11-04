@@ -233,16 +233,73 @@ const heroSlides = [
 
 function Hero() {
   const [slide, setSlide] = useState(0)
+  const [touchStartX, setTouchStartX] = useState<number | null>(null)
+  const [touchStartY, setTouchStartY] = useState<number | null>(null)
+  const [dragStartX, setDragStartX] = useState<number | null>(null)
+
   useEffect(() => {
     const id = window.setInterval(() => setSlide((v) => (v + 1) % heroSlides.length), 6500)
     return () => window.clearInterval(id)
-  }, [])
+  }, [slide])
+
   const current = heroSlides[slide]
   const prevSlide = () => setSlide((s) => (s - 1 + heroSlides.length) % heroSlides.length)
   const nextSlide = () => setSlide((s) => (s + 1) % heroSlides.length)
 
+  // Touch swipe support (mobile & tablet)
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.touches[0].clientX)
+    setTouchStartY(e.touches[0].clientY)
+  }
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX === null || touchStartY === null) return
+    const touchEndX = e.changedTouches[0].clientX
+    const touchEndY = e.changedTouches[0].clientY
+    const diffX = touchStartX - touchEndX
+    const diffY = touchStartY - touchEndY
+
+    // Trigger only if horizontal swipe dominates vertical movement (preserves smooth scrolling)
+    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 35) {
+      if (diffX > 0) {
+        // Swiped left -> advance to next slide
+        nextSlide()
+      } else {
+        // Swiped right -> go to previous slide
+        prevSlide()
+      }
+    }
+    setTouchStartX(null)
+    setTouchStartY(null)
+  }
+
+  // Mouse drag swipe support (desktop)
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if ((e.target as HTMLElement).closest('a, button')) return
+    setDragStartX(e.clientX)
+  }
+
+  const handleMouseUp = (e: React.MouseEvent) => {
+    if (dragStartX === null) return
+    const diffX = dragStartX - e.clientX
+    if (Math.abs(diffX) > 45) {
+      if (diffX > 0) {
+        nextSlide()
+      } else {
+        prevSlide()
+      }
+    }
+    setDragStartX(null)
+  }
+
   return (
-    <section className="hero">
+    <section
+      className="hero"
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
+    >
       <AnimatePresence mode="popLayout">
         <motion.div
           key={current.image}
@@ -295,6 +352,18 @@ function Hero() {
           <span>0{slide + 1} <i><b style={{ width: `${((slide + 1) / heroSlides.length) * 100}%` }} /></i> 0{heroSlides.length}</span>
           <button onClick={nextSlide} aria-label="Next slide"><ArrowRight /></button>
         </div>
+      </div>
+      {/* Mobile Swipe Pagination Indicator */}
+      <div className="hero-mobile-dots">
+        {heroSlides.map((_, idx) => (
+          <button
+            key={idx}
+            type="button"
+            className={`hero-mobile-dot ${idx === slide ? 'active' : ''}`}
+            onClick={() => setSlide(idx)}
+            aria-label={`Go to slide ${idx + 1}`}
+          />
+        ))}
       </div>
     </section>
   )
