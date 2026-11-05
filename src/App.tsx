@@ -1497,7 +1497,7 @@ function GalleryPage() {
             <SectionTitle
               eyebrow="PHOTO GALLERY"
               title="Modern spaces created for healing."
-              text="Explore 100+ authentic photographs showcasing our modern hospital campus, advanced surgical suites, 24/7 ICU life support, recovery wards, and patient lounges in Jalore."
+              text=""
               center
             />
             <div className="filters">
@@ -1524,7 +1524,7 @@ function GalleryPage() {
                   <img src={img.src} alt={img.title} loading="lazy" />
                   <span>
                     <small>{img.category}</small>
-                    <b>{img.title}</b>
+                    
                   </span>
                   <i>
                     <ArrowUpRight />
