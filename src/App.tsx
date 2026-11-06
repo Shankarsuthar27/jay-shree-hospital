@@ -366,18 +366,6 @@ function Hero() {
           <button onClick={nextSlide} aria-label="Next slide"><ArrowRight /></button>
         </div>
       </div>
-      {/* Mobile Swipe Pagination Indicator */}
-      <div className="hero-mobile-dots">
-        {heroSlides.map((_, idx) => (
-          <button
-            key={idx}
-            type="button"
-            className={`hero-mobile-dot ${idx === slide ? 'active' : ''}`}
-            onClick={() => setSlide(idx)}
-            aria-label={`Go to slide ${idx + 1}`}
-          />
-        ))}
-      </div>
     </section>
   )
 }
