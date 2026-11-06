@@ -1354,20 +1354,88 @@ function FormFields({ contact = false }: { contact?: boolean }) {
 
 function Appointment({ contact = false }: { contact?: boolean }) {
   const [sent, setSent] = useState(false)
+  const [patientName, setPatientName] = useState('')
+
   function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    e.currentTarget.reset()
+    const form = e.currentTarget
+    const fd = new FormData(form)
+
+    const name = (fd.get('name') as string)?.trim() || ''
+    const phone = (fd.get('phone') as string)?.trim() || ''
+    const email = (fd.get('email') as string)?.trim() || ''
+    const department = (fd.get('department') as string)?.trim() || ''
+    const date = (fd.get('date') as string)?.trim() || ''
+    const message = (fd.get('message') as string)?.trim() || ''
+
+    const lines: string[] = [
+      '🏥 *JayShree Hospital, Jalore*',
+      contact ? '📩 *New Website Inquiry*' : '📋 *Appointment Request*',
+      '━━━━━━━━━━━━━━━━━━',
+      `👤 *Patient Name:* ${name}`,
+      `📞 *Phone Number:* ${phone}`,
+    ]
+
+    if (email) {
+      lines.push(`✉️ *Email:* ${email}`)
+    }
+    if (department) {
+      lines.push(`🩺 *Department/Specialty:* ${department}`)
+    }
+    if (date) {
+      lines.push(`📅 *Preferred Date:* ${date}`)
+    }
+    if (message) {
+      lines.push(`💬 *Details/Message:* ${message}`)
+    }
+
+    lines.push('━━━━━━━━━━━━━━━━━━')
+    lines.push('_Sent from Jayshree Hospital Website_')
+
+    const whatsappUrl = `https://wa.me/919414895281?text=${encodeURIComponent(lines.join('\n'))}`
+
+    setPatientName(name)
     setSent(true)
-    window.setTimeout(() => setSent(false), 4200)
+    form.reset()
+    window.setTimeout(() => setSent(false), 5500)
+
+    try {
+      const win = window.open(whatsappUrl, '_blank')
+      if (!win) {
+        window.location.href = whatsappUrl
+      }
+    } catch {
+      window.location.href = whatsappUrl
+    }
   }
+
   return (
     <>
       <form onSubmit={submit} className={`form-grid ${contact ? 'contact-form' : ''}`}>
         <FormFields contact={contact} />
-        <button className="button field-full" type="submit">Send appointment request <ArrowRight size={18} /></button>
-        <small className="form-note"><ShieldCheck size={14} /> Your information is kept private and secure.</small>
+        <button className="button field-full" type="submit">
+          Send appointment request <ArrowRight size={18} />
+        </button>
+        <small className="form-note">
+          <MessageCircle size={14} /> Details are sent directly to our 24/7 desk on WhatsApp (+91 94148 95281).
+        </small>
       </form>
-      <AnimatePresence>{sent && <motion.div className="toast" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}><span><Check /></span><div><b>Request received</b><small>Our care team will contact you shortly.</small></div></motion.div>}</AnimatePresence>
+      <AnimatePresence>
+        {sent && (
+          <motion.div
+            className="toast"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+          >
+            <span><Check /></span>
+            <div>
+              <b>Appointment request created {patientName ? `for ${patientName}` : ''}</b>
+              <small>Opening WhatsApp to send details to +91 94148 95281...</small>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   )
 }
