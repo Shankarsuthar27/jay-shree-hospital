@@ -43,7 +43,9 @@ import { galleryImages, GalleryItem } from './galleryData'
 
 const MAP_URL =
   'https://www.google.com/maps/place/Jayshree+hospital+jalore/@25.3447214,72.621866,4239m/data=!3m1!1e3!4m6!3m5!1s0x3943010063623da3:0xd778975d9fa48ace!8m2!3d25.3470334!4d72.6258287!16s%2Fg%2F11n3pxg5z9?authuser=0&entry=ttu'
-const PHONE = 'tel:+919999999999'
+const PHONE = 'tel:+919414895281'
+const PHONE_DISPLAY = '+91 94148 95281'
+const WHATSAPP_URL = 'https://wa.me/919414895281'
 const departments = [
   'Critical Medicine (ICU/CCU)',
   'Cardiology',
@@ -98,7 +100,7 @@ function Header() {
             <span><Clock3 size={14} /> Open 24 Hours</span>
           </div>
           <div className="utility-group utility-right">
-            <a href={PHONE} className="emergency-link"><Ambulance size={15} /> 24/7 Emergency & Ambulance</a>
+            <a href={PHONE} className="emergency-link"><Ambulance size={15} /> 24/7 Helpline: +91 94148 95281</a>
             <a href="mailto:info@jayshreehospital.in"><Mail size={14} /> info@jayshreehospital.in</a>
           </div>
         </div>
@@ -123,7 +125,7 @@ function Header() {
               <div className="mobile-head"><Logo /><button onClick={() => setOpen(false)} aria-label="Close navigation"><X /></button></div>
               <nav>{links.map(([label, href]) => <a key={label} href={href} onClick={() => setOpen(false)}>{label}<ChevronRight size={18} /></a>)}</nav>
               <div className="mobile-actions">
-                <a href={PHONE} className="button button-red"><Phone size={18} /> Call Emergency</a>
+                <a href={PHONE} className="button button-red"><Phone size={18} /> Call: +91 94148 95281</a>
                 <a href={MAP_URL} target="_blank" rel="noreferrer" className="button button-outline"><MapPin size={18} /> Get Directions</a>
               </div>
             </motion.aside>
@@ -374,7 +376,7 @@ const quickActions = [
   [CalendarDays, 'Book An Appointment', 'Hassle-free OPD scheduling', '#appointment'],
   [Stethoscope, 'Consult Dr. Hemant Jain', 'Expert MD physician care', '#doctor'],
   [Microscope, 'Diagnostic Services', 'Advanced lab & imaging', '#specialties'],
-  [Ambulance, '24/7 Emergency & Pharmacy', 'Urgent care, round the clock', PHONE],
+  [Ambulance, '24/7 Emergency & Pharmacy', 'Call: +91 94148 95281', PHONE],
 ]
 
 function QuickActions() {
@@ -996,7 +998,7 @@ function OtherDoctors() {
                     href={PHONE}
                     className="button button-outline doc-modal-call-btn"
                   >
-                    <Phone size={15} /> Call Hospital
+                    <Phone size={15} /> Call: +91 94148 95281
                   </a>
                 </div>
               </div>
@@ -1310,7 +1312,7 @@ function EmergencySection() {
 
           <div className="emergency-cta-group">
             <a href={PHONE} className="button button-red emergency-call-btn">
-              <Phone size={18} /> Call Ambulance: 24/7 Helpline
+              <Phone size={18} /> Call Helpline: +91 94148 95281
             </a>
             <a href={MAP_URL} target="_blank" rel="noreferrer" className="button button-outline">
               <MapPin size={18} /> View Hospital Location
@@ -1380,7 +1382,7 @@ function AppointmentSection() {
           <span className="eyebrow light">Appointments</span>
           <h2>Your care journey can start today.</h2>
           <p>Tell us what you need. Our team will call to confirm your preferred time and help you prepare for your visit.</p>
-          <div className="appointment-contact"><span><Phone /></span><div><small>24/7 patient assistance</small><b>Call our care desk</b></div></div>
+          <div className="appointment-contact"><span><Phone /></span><div><small>24/7 patient assistance</small><b>+91 94148 95281</b></div></div>
         </div>
         <div className="form-card"><h3>Request an appointment</h3><p>Complete the form and our team will get back to you.</p><Appointment /></div>
       </div>
@@ -1407,10 +1409,10 @@ function Footer() {
   return (
     <footer>
       <div className="shell footer-grid">
-        <div><Logo light /><p>Ethical, accessible and compassionate healthcare for Jalore and surrounding communities.</p><div className="socials"><a href="#" aria-label="Website"><Globe /></a><a href="#" aria-label="Photo gallery"><Camera /></a><a href="#" aria-label="WhatsApp"><MessageCircle /></a></div></div>
+        <div><Logo light /><p>Ethical, accessible and compassionate healthcare for Jalore and surrounding communities.</p><div className="socials"><a href="#" aria-label="Website"><Globe /></a><a href="/gallery" aria-label="Photo gallery"><Camera /></a><a href={WHATSAPP_URL} target="_blank" rel="noreferrer" aria-label="WhatsApp" title="Chat on WhatsApp (+91 94148 95281)"><MessageCircle /></a></div></div>
         <div><h4>Quick links</h4>{[['Home', '/'], ['About Us', '/#about'], ['Our Doctor', '/#doctor'], ['Specialists', '/#doctors-panel'], ['Photo Gallery', '/gallery'], ['Contact Us', '/contact'], ['Book Appointment', '/#appointment']].map(([x, h]) => <a key={x} href={h}>{x}</a>)}</div>
         <div><h4>Our specialties</h4>{['Critical Medicine (ICU/CCU)', 'Cardiology', 'Neurology', 'Urology', 'Orthopedics', 'Surgery', 'Dialysis', 'Investigations'].map(x => <a key={x} href="/#specialties">{x}</a>)}</div>
-        <div><h4>Contact & location</h4><p className="footer-contact"><MapPin />Manpura Colony, Shivaji Nagar Colony, Jalore, Rajasthan 343001</p><p className="footer-contact"><Mail />info@jayshreehospital.in</p><a className="map-link" href={MAP_URL} target="_blank" rel="noreferrer">View on Google Maps <ArrowUpRight size={16} /></a></div>
+        <div><h4>Contact & location</h4><p className="footer-contact"><MapPin />Manpura Colony, Shivaji Nagar Colony, Jalore, Rajasthan 343001</p><p className="footer-contact"><Phone /><a href={PHONE}>+91 94148 95281</a></p><p className="footer-contact"><Mail />info@jayshreehospital.in</p><a className="map-link" href={MAP_URL} target="_blank" rel="noreferrer">View on Google Maps <ArrowUpRight size={16} /></a></div>
       </div>
       <div className="footer-bottom"><div className="shell"><span>© 2025 JayShree Hospital Jalore. All Rights Reserved.</span><span>Coordinates: 25.3470334, 72.6258287</span></div></div>
     </footer>
@@ -1488,9 +1490,9 @@ function GalleryPage() {
       <Header />
       <main>
         <PageHero
-          image="/images/main1.jpg"
+          image="/images/icu.jpg"
           crumb="Gallery"
-          title="Inside JayShree Hospital — Comprehensive Photo Archive"
+          title="JayShree Hospital — Comprehensive Photo Archive"
         />
         <section className="section gallery-section">
           <div className="shell">
@@ -1618,13 +1620,28 @@ function GalleryPage() {
 function ContactPage() {
   const cards = [
     [MapPin, 'Hospital location', 'Manpura Colony, Shivaji Nagar Colony, Jalore, Rajasthan 343001'],
-    [Phone, 'Helpline & appointments', '24/7 phone & WhatsApp assistance', 'info@jayshreehospital.in'],
+    [Phone, 'Helpline & appointments', '+91 94148 95281', '24/7 phone & WhatsApp assistance'],
     [Clock3, 'Working hours', 'Emergency & Pharmacy: 24 Hours', 'Dr. Jain OPD: Mon–Sat, 10 AM–7 PM'],
   ]
   return (
     <><Header /><main><PageHero image="/images/main2.jpg" crumb="Contact Us" title="Get In Touch With JayShree Hospital" />
       <section className="section contact-section"><div className="shell">
-        <div className="contact-cards">{cards.map(([Icon, title, line1, line2]) => <article key={title as string}><span><Icon /></span><div><h3>{title as string}</h3><p>{line1 as string}</p>{line2 && <small>{line2 as string}</small>}</div></article>)}</div>
+        <div className="contact-cards">
+          {cards.map(([Icon, title, line1, line2]) => (
+            <article key={title as string}>
+              <span><Icon /></span>
+              <div>
+                <h3>{title as string}</h3>
+                {Icon === Phone ? (
+                  <p><a href={PHONE} style={{ color: 'var(--blue)', fontWeight: 700 }}>{line1 as string}</a></p>
+                ) : (
+                  <p>{line1 as string}</p>
+                )}
+                {line2 && <small>{line2 as string}</small>}
+              </div>
+            </article>
+          ))}
+        </div>
         <div className="contact-split">
           <div className="contact-form-wrap"><SectionTitle eyebrow="Send An Inquiry" title="How can we help?" text="Share your details and our patient care team will get in touch." /><Appointment contact /></div>
           <div className="map-wrap"><iframe title="JayShree Hospital map" src="https://www.google.com/maps?q=25.3470334,72.6258287&z=16&output=embed" loading="lazy" /><div><span><MapPin /></span><p><b>JayShree Hospital, Jalore</b>Manpura Colony, Shivaji Nagar Colony</p><a href={MAP_URL} target="_blank" rel="noreferrer" className="button">Open in Google Maps <ArrowUpRight size={17} /></a></div></div>
