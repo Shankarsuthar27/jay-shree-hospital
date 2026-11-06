@@ -1371,7 +1371,7 @@ function Appointment({ contact = false }: { contact?: boolean }) {
     const lines: string[] = [
       'JayShree Hospital, Jalore',
       contact ? 'Website Inquiry' : 'Appointment Request',
-      '',
+      '━━━━━━━━━━━━━━━━━━',
       `Patient Name: ${name}`,
       `Phone Number: ${phone}`,
     ]
@@ -1388,6 +1388,9 @@ function Appointment({ contact = false }: { contact?: boolean }) {
     if (message) {
       lines.push(`Message: ${message}`)
     }
+
+    lines.push('━━━━━━━━━━━━━━━━━━')
+    lines.push('Sent from Jayshree Hospital Website')
 
     const whatsappUrl = `https://wa.me/919414895281?text=${encodeURIComponent(lines.join('\n'))}`
 
