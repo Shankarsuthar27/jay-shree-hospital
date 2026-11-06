@@ -94,8 +94,8 @@ function Header() {
           <div className="utility-group utility-left">
             <a href={MAP_URL} target="_blank" rel="noreferrer" className="utility-location" title="View hospital on Google Maps">
               <MapPin size={12} className="utility-pin-icon" />
-              <span className="utility-loc-desktop">Manpura Colony, Shivaji Nagar Colony, Jalore</span>
-              <span className="utility-loc-mobile">Manpura Colony, Jalore</span>
+              {/* <span className="utility-loc-desktop">Manpura Colony, Shivaji Nagar Colony, Jalore</span> */}
+              <span className="utility-loc-mobile">Manpura Colony , Jalore</span>
             </a>
             <span className="utility-hours">
               <Clock3 size={12} className="utility-clock-icon" />
@@ -1369,28 +1369,25 @@ function Appointment({ contact = false }: { contact?: boolean }) {
     const message = (fd.get('message') as string)?.trim() || ''
 
     const lines: string[] = [
-      '🏥 *JayShree Hospital, Jalore*',
-      contact ? '📩 *New Website Inquiry*' : '📋 *Appointment Request*',
-      '━━━━━━━━━━━━━━━━━━',
-      `👤 *Patient Name:* ${name}`,
-      `📞 *Phone Number:* ${phone}`,
+      'JayShree Hospital, Jalore',
+      contact ? 'Website Inquiry' : 'Appointment Request',
+      '',
+      `Patient Name: ${name}`,
+      `Phone Number: ${phone}`,
     ]
 
     if (email) {
-      lines.push(`✉️ *Email:* ${email}`)
+      lines.push(`Email: ${email}`)
     }
     if (department) {
-      lines.push(`🩺 *Department/Specialty:* ${department}`)
+      lines.push(`Department: ${department}`)
     }
     if (date) {
-      lines.push(`📅 *Preferred Date:* ${date}`)
+      lines.push(`Preferred Date: ${date}`)
     }
     if (message) {
-      lines.push(`💬 *Details/Message:* ${message}`)
+      lines.push(`Message: ${message}`)
     }
-
-    lines.push('━━━━━━━━━━━━━━━━━━')
-    lines.push('_Sent from Jayshree Hospital Website_')
 
     const whatsappUrl = `https://wa.me/919414895281?text=${encodeURIComponent(lines.join('\n'))}`
 
