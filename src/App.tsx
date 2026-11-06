@@ -92,20 +92,25 @@ function Header() {
       <div className="utility">
         <div className="shell utility-inner">
           <div className="utility-group utility-left">
-            <a href={MAP_URL} target="_blank" rel="noreferrer" className="utility-location">
-              <MapPin size={13} />
+            <a href={MAP_URL} target="_blank" rel="noreferrer" className="utility-location" title="View hospital on Google Maps">
+              <MapPin size={12} className="utility-pin-icon" />
               <span className="utility-loc-full">Manpura Colony, Shivaji Nagar Colony, Jalore</span>
-              <span className="utility-loc-short">Jalore</span>
+              <span className="utility-loc-mid">Manpura Colony, Shivaji Nagar, Jalore</span>
+              <span className="utility-loc-short">Manpura Colony, Jalore</span>
             </a>
-            <span className="utility-hours"><Clock3 size={13} /> Open 24 Hours</span>
+            <span className="utility-hours">
+              <span className="status-live-dot" />
+              <Clock3 size={12} className="utility-clock-icon" />
+              Open 24 Hours
+            </span>
           </div>
           <div className="utility-group utility-right">
-            <a href={PHONE} className="emergency-link">
-              <Phone size={13} />
+            <a href={PHONE} className="emergency-link" title="Call 24/7 Emergency Helpline">
+              <Phone size={13} className="emergency-phone-icon" />
               <span className="utility-call-text">24/7 Helpline: </span>
-              <span className="utility-phone-num">+91 94148 95281</span>
+              <strong className="utility-phone-num">+91 94148 95281</strong>
             </a>
-            <a href="mailto:info@jayshreehospital.in" className="utility-mail">
+            <a href="mailto:info@jayshreehospital.in" className="utility-mail" title="Email hospital">
               <Mail size={13} /> info@jayshreehospital.in
             </a>
           </div>
