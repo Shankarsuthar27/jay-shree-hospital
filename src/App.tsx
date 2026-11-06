@@ -123,7 +123,7 @@ function Header() {
           </nav>
           <div className="nav-actions">
             <a href="/#appointment" className="button button-small">Book Appointment</a>
-            <a href={PHONE} className="emergency-button"><Phone size={16} /> Emergency</a>
+            <a href={PHONE} className="emergency-button"><Phone size={15} /> Emergency: +91 94148 95281</a>
           </div>
           <button className="menu-button" onClick={() => setOpen(true)} aria-label="Open navigation"><Menu /></button>
         </div>
@@ -135,7 +135,7 @@ function Header() {
               <div className="mobile-head"><Logo /><button onClick={() => setOpen(false)} aria-label="Close navigation"><X /></button></div>
               <nav>{links.map(([label, href]) => <a key={label} href={href} onClick={() => setOpen(false)}>{label}<ChevronRight size={18} /></a>)}</nav>
               <div className="mobile-actions">
-                <a href={PHONE} className="button button-red"><Phone size={18} /> Call: +91 94148 95281</a>
+                <a href={PHONE} className="button button-red"><Phone size={18} /> Emergency: +91 94148 95281</a>
                 <a href={MAP_URL} target="_blank" rel="noreferrer" className="button button-outline"><MapPin size={18} /> Get Directions</a>
               </div>
             </motion.aside>
@@ -374,7 +374,7 @@ const quickActions = [
   [CalendarDays, 'Book An Appointment', 'Hassle-free OPD scheduling', '#appointment'],
   [Stethoscope, 'Consult Dr. Hemant Jain', 'Expert MD physician care', '#doctor'],
   [Microscope, 'Diagnostic Services', 'Advanced lab & imaging', '#specialties'],
-  [Ambulance, '24/7 Emergency & Pharmacy', 'Call: +91 94148 95281', PHONE],
+  [Ambulance, '24/7 Emergency & Pharmacy', 'Emergency: +91 94148 95281', PHONE],
 ]
 
 function QuickActions() {
@@ -656,7 +656,7 @@ function Doctor() {
           </blockquote>
           <div className="timing">
             <Clock3 />
-            <span><b>OPD Timings</b>Monday – Saturday: 10:00 AM – 7:00 PM<small>Emergency Services: 24x7</small></span>
+            <span><b>OPD Timings</b>Monday – Saturday: 10:00 AM – 7:00 PM<small>Emergency: 24/7 · <a href={PHONE} style={{ color: 'inherit', textDecoration: 'underline' }}>+91 94148 95281</a></small></span>
           </div>
           <a href="#appointment" className="button">Book consultation <ArrowRight size={18} /></a>
         </div>
@@ -996,7 +996,7 @@ function OtherDoctors() {
                     href={PHONE}
                     className="button button-outline doc-modal-call-btn"
                   >
-                    <Phone size={15} /> Call: +91 94148 95281
+                    <Phone size={15} /> Emergency: +91 94148 95281
                   </a>
                 </div>
               </div>
@@ -1310,7 +1310,7 @@ function EmergencySection() {
 
           <div className="emergency-cta-group">
             <a href={PHONE} className="button button-red emergency-call-btn">
-              <Phone size={18} /> Call Helpline: +91 94148 95281
+              <Phone size={18} /> 24/7 Emergency: +91 94148 95281
             </a>
             <a href={MAP_URL} target="_blank" rel="noreferrer" className="button button-outline">
               <MapPin size={18} /> View Hospital Location
@@ -1448,7 +1448,7 @@ function AppointmentSection() {
           <span className="eyebrow light">Appointments</span>
           <h2>Your care journey can start today.</h2>
           <p>Tell us what you need. Our team will call to confirm your preferred time and help you prepare for your visit.</p>
-          <div className="appointment-contact"><span><Phone /></span><div><small>24/7 patient assistance</small><b>+91 94148 95281</b></div></div>
+          <div className="appointment-contact"><span><Phone /></span><div><small>24/7 Emergency & Appointments</small><b>+91 94148 95281</b></div></div>
         </div>
         <div className="form-card"><h3>Request an appointment</h3><p>Complete the form and our team will get back to you.</p><Appointment /></div>
       </div>
@@ -1478,7 +1478,7 @@ function Footer() {
         <div><Logo light /><p>Ethical, accessible and compassionate healthcare for Jalore and surrounding communities.</p><div className="socials"><a href="#" aria-label="Website"><Globe /></a><a href="/gallery" aria-label="Photo gallery"><Camera /></a><a href={WHATSAPP_URL} target="_blank" rel="noreferrer" aria-label="WhatsApp" title="Chat on WhatsApp (+91 94148 95281)"><MessageCircle /></a></div></div>
         <div><h4>Quick links</h4>{[['Home', '/'], ['About Us', '/#about'], ['Our Doctor', '/#doctor'], ['Specialists', '/#doctors-panel'], ['Photo Gallery', '/gallery'], ['Contact Us', '/contact'], ['Book Appointment', '/#appointment']].map(([x, h]) => <a key={x} href={h}>{x}</a>)}</div>
         <div><h4>Our specialties</h4>{['Critical Medicine (ICU/CCU)', 'Cardiology', 'Neurology', 'Urology', 'Orthopedics', 'Surgery', 'Dialysis', 'Investigations'].map(x => <a key={x} href="/#specialties">{x}</a>)}</div>
-        <div><h4>Contact & location</h4><p className="footer-contact"><MapPin />Manpura Colony, Shivaji Nagar Colony, Jalore, Rajasthan 343001</p><p className="footer-contact"><Phone /><a href={PHONE}>+91 94148 95281</a></p><p className="footer-contact"><Mail />info@jayshreehospital.in</p><a className="map-link" href={MAP_URL} target="_blank" rel="noreferrer">View on Google Maps <ArrowUpRight size={16} /></a></div>
+        <div><h4>Contact & location</h4><p className="footer-contact"><MapPin />Manpura Colony, Shivaji Nagar Colony, Jalore, Rajasthan 343001</p><p className="footer-contact"><Phone /><a href={PHONE}>24/7 Emergency: +91 94148 95281</a></p><p className="footer-contact"><Mail />info@jayshreehospital.in</p><a className="map-link" href={MAP_URL} target="_blank" rel="noreferrer">View on Google Maps <ArrowUpRight size={16} /></a></div>
       </div>
       <div className="footer-bottom"><div className="shell"><span>© 2025 JayShree Hospital Jalore. All Rights Reserved.</span><span>Coordinates: 25.3470334, 72.6258287</span></div></div>
     </footer>
@@ -1686,7 +1686,7 @@ function GalleryPage() {
 function ContactPage() {
   const cards = [
     [MapPin, 'Hospital location', 'Manpura Colony, Shivaji Nagar Colony, Jalore, Rajasthan 343001'],
-    [Phone, 'Helpline & appointments', '+91 94148 95281', '24/7 phone & WhatsApp assistance'],
+    [Phone, '24/7 Emergency & Helpline', '+91 94148 95281', 'Immediate emergency response & ambulance dispatch'],
     [Clock3, 'Working hours', 'Emergency & Pharmacy: 24 Hours', 'Dr. Jain OPD: Mon–Sat, 10 AM–7 PM'],
   ]
   return (
