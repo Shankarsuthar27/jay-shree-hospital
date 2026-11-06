@@ -91,17 +91,23 @@ function Header() {
     <>
       <div className="utility">
         <div className="shell utility-inner">
-          <div className="utility-group">
-            <a href={MAP_URL} target="_blank" rel="noreferrer">
-              <MapPin size={14} /> Manpura Colony, Shivaji Nagar Colony, Jalore
-
-
+          <div className="utility-group utility-left">
+            <a href={MAP_URL} target="_blank" rel="noreferrer" className="utility-location">
+              <MapPin size={13} />
+              <span className="utility-loc-full">Manpura Colony, Shivaji Nagar Colony, Jalore</span>
+              <span className="utility-loc-short">Jalore</span>
             </a>
-            <span><Clock3 size={14} /> Open 24 Hours</span>
+            <span className="utility-hours"><Clock3 size={13} /> Open 24 Hours</span>
           </div>
           <div className="utility-group utility-right">
-            <a href={PHONE} className="emergency-link"><Ambulance size={15} /> 24/7 Helpline: +91 94148 95281</a>
-            <a href="mailto:info@jayshreehospital.in"><Mail size={14} /> info@jayshreehospital.in</a>
+            <a href={PHONE} className="emergency-link">
+              <Phone size={13} />
+              <span className="utility-call-text">24/7 Helpline: </span>
+              <span className="utility-phone-num">+91 94148 95281</span>
+            </a>
+            <a href="mailto:info@jayshreehospital.in" className="utility-mail">
+              <Mail size={13} /> info@jayshreehospital.in
+            </a>
           </div>
         </div>
       </div>
