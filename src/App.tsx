@@ -95,7 +95,7 @@ function Header() {
             <a href={MAP_URL} target="_blank" rel="noreferrer" className="utility-location" title="View hospital on Google Maps">
               <MapPin size={12} className="utility-pin-icon" />
               {/* <span className="utility-loc-desktop">Manpura Colony, Shivaji Nagar Colony, Jalore</span> */}
-              <span className="utility-loc-mobile">Manpura Colony , Jalore</span>
+              <span className="utility-loc-mobile">Manpura Colony, Shivaji Nagar, Jalore</span>
             </a>
             <span className="utility-hours">
               <Clock3 size={12} className="utility-clock-icon" />
